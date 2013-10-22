@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by zen on 10/22/13.
  */
-public abstract class PaginationListFragment<T> extends BaseListFragment<T> {
+public abstract class PaginationListFragment<T, LV> extends BaseListFragment<T, LV> {
     protected static class PaginationListLoader<T> extends BaseListLoader<T> {
         private int currentPage;
         private final LoadingTask<T> loadingTask;

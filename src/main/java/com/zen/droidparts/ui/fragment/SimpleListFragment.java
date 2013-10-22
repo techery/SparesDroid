@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by zen on 10/22/13.
  */
-public abstract class SimpleListFragment<T> extends BaseListFragment<T> {
+public abstract class SimpleListFragment<T, LV> extends BaseListFragment<T, LV> {
     public static class SimpleListLoader<T> extends BaseListLoader<T> {
         private final LoadingTask<T> loadingTask;
         public interface LoadingTask<T> {
@@ -27,6 +27,6 @@ public abstract class SimpleListFragment<T> extends BaseListFragment<T> {
 
     @Override
     protected void preProcessResult(List<T> result) {
-        getArrayAdapter().clear();
+        getAdapter().clear();
     }
 }

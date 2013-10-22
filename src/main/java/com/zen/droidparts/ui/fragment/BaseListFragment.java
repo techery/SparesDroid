@@ -2,36 +2,36 @@ package com.zen.droidparts.ui.fragment;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.zen.droidparts.R;
 
-public abstract class BaseListFragment<T> extends ArrayAdapterFragment<T> implements AdapterView.OnItemClickListener {
-    protected ListView listView;
+public abstract class BaseListFragment<T, LV> extends ArrayAdapterFragment<T> implements AdapterView.OnItemClickListener {
+    protected LV listView;
 
     @Override
     protected void afterCreateView(View rootView) {
         super.afterCreateView(rootView);
 
         setListView(findListView(rootView));
-
-        listView.setOnItemClickListener(this);
+        setupOnItemClickListener(getListView());
     }
 
-    protected ListView findListView(View rootView) {
-        return (ListView) rootView.findViewById(R.id.content_list);
+    protected LV findListView(View rootView) {
+        return (LV) rootView.findViewById(R.id.content_list);
     }
 
-    public ListView getListView() {
+    public LV getListView() {
         return listView;
     }
 
-    public void setListView(ListView listView) {
+    public void setListView(LV listView) {
         this.listView = listView;
-        this.listView.setAdapter(getArrayAdapter());
+        linkAdapter(this.listView);
     }
 
-    @Override
+    protected abstract void setupOnItemClickListener(LV listView);
+    protected abstract void linkAdapter(LV listView);
+
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         T item = getItemAtPosition(position);
 

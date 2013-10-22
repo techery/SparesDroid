@@ -18,7 +18,7 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
         arrayAdapter = new BaseListAdapter<T>(getActivity(), getCellBuilder());
     }
 
-    protected BaseListAdapter<T> getArrayAdapter() {
+    protected BaseListAdapter<T> getAdapter() {
         return arrayAdapter;
     }
 
@@ -34,7 +34,7 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     }
 
     protected T getItemAtPosition(int position) {
-        return getArrayAdapter().getItem(position);
+        return getAdapter().getItem(position);
     }
 
     protected abstract void preProcessResult(List<T> result);
