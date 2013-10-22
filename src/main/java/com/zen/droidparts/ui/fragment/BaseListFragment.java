@@ -1,60 +1,40 @@
 package com.zen.droidparts.ui.fragment;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-public abstract class BaseListFragment<T, E> extends ListFragment {
-    private static final int MAIN_LOADER = 1;
+import com.zen.droidparts.R;
 
-    private LoaderManager.LoaderCallbacks<T> loaderCallbacks = new LoaderManager.LoaderCallbacks<T>() {
-        @Override
-        public Loader<T> onCreateLoader(int i, Bundle bundle) {
-            return getLoader(getActivity());
-        }
-
-        @Override
-        public void onLoadFinished(Loader<T> tLoader, T result) {
-            processResult(result);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<T> tLoader) {
-
-        }
-    };
+public abstract class BaseListFragment<T> extends ArrayAdapterFragment<T> implements AdapterView.OnItemClickListener {
+    protected ListView listView;
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void afterCreateView(View rootView) {
+        super.afterCreateView(rootView);
 
-        Loader loader = getLoaderManager().initLoader(MAIN_LOADER, null, loaderCallbacks);
-        loader.forceLoad();
+        setListView(findListView(rootView));
+
+        listView.setOnItemClickListener(this);
+    }
+
+    protected ListView findListView(View rootView) {
+        return (ListView) rootView.findViewById(R.id.content_list);
+    }
+
+    public ListView getListView() {
+        return listView;
+    }
+
+    public void setListView(ListView listView) {
+        this.listView = listView;
+        this.listView.setAdapter(getArrayAdapter());
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        T item = getItemAtPosition(position);
 
-        E item = getItemAtPosition(position);
-
-        onItemClick(item);
+        getEventBus().post(new Events.ItemSelectionEvent<T>(item));
     }
-
-    protected void reload() {
-        Loader loader = getLoaderManager().restartLoader(MAIN_LOADER, null, loaderCallbacks);
-        loader.forceLoad();
-    }
-
-    protected void onItemClick(E item) {
-
-    }
-
-    protected abstract Loader<T> getLoader(FragmentActivity activity);
-    protected abstract E getItemAtPosition(int position);
-    protected abstract void processResult(T result);
 }
