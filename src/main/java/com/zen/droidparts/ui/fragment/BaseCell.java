@@ -5,9 +5,6 @@ import android.widget.LinearLayout;
 
 import de.greenrobot.event.EventBus;
 
-/**
- * Created by zen on 10/25/13.
- */
 public abstract class BaseCell<T> extends LinearLayout implements CollectionFragment.BaseCell<T> {
     private EventBus eventBus;
 

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import butterknife.Views;
 import de.greenrobot.event.EventBus;
 
@@ -15,6 +16,12 @@ import de.greenrobot.event.EventBus;
 public abstract class BaseFragment extends Fragment {
     private EventBus eventBus;
     private Navigator navigator;
+
+    public interface Events {
+        class ReloadEvent {
+
+        }
+    }
 
     public BaseFragment() {
         setEventBus(new EventBus());
@@ -54,6 +61,10 @@ public abstract class BaseFragment extends Fragment {
     public void onPause() {
         super.onPause();
         eventBus.unregister(this);
+    }
+
+    public void onEvent(Events.ReloadEvent reloadEvent) {
+
     }
 
     public EventBus getEventBus() {

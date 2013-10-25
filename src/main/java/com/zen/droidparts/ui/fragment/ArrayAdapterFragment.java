@@ -25,7 +25,7 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     @Override
     protected void processResult(List<T> result) {
         preProcessResult(result);
-
+        
         for (T res : result) {
             arrayAdapter.add(res);
         }
