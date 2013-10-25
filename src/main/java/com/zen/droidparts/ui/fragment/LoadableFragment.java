@@ -28,7 +28,6 @@ public abstract class LoadableFragment<T> extends BaseFragment {
         getLoaderManager().restartLoader(MAIN_LOADER, null, loaderCallbacks);
     }
 
-
     protected void onEvent(Events.ReloadEvent reloadEvent) {
         reload();
     }
