@@ -1,7 +1,7 @@
 package com.zen.droidparts.ui.fragment;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -33,34 +33,22 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
         arrayAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void processError(Loader<List<T>> listLoader) {
+        showErrorState();
+    }
+
     protected T getItemAtPosition(int position) {
         return getAdapter().getItem(position);
     }
 
+    protected abstract void showErrorState();
     protected abstract void preProcessResult(List<T> result);
     protected abstract BaseCell.CellBuilder getCellBuilder();
 
-    protected static abstract class BaseListLoader<T> extends AsyncTaskLoader<List<T>> {
-        private Throwable lastError;
-
-        public BaseListLoader(Context context) {
-            super(context);
-        }
-
-        @Override
-        public List<T> loadInBackground() {
-            try {
-                return perform();
-            } catch (Exception e) {
-                lastError = e;
-                return null;
-            }
-        }
-
-        protected abstract List<T> perform();
-
-        public Throwable getLastError() {
-            return lastError;
+    protected static abstract class BaseListLoader<T> extends BaseLoader<List<T>> {
+        public BaseListLoader(Context context, LoadingTask<List<T>> loadingTask) {
+            super(context, loadingTask);
         }
     }
 

@@ -4,20 +4,18 @@ import android.content.Context;
 
 import java.util.List;
 
-/**
- * Created by zen on 10/22/13.
- */
 public abstract class PaginationListFragment<T, LV> extends BaseListFragment<T, LV> {
-    protected static class PaginationListLoader<T> extends BaseListLoader<T> {
+    protected static class PaginationListLoader<T> extends BaseAbstractLoader<List<T>> {
         private int currentPage;
         private final LoadingTask<T> loadingTask;
-        public interface LoadingTask<T> {
-            List<T> call(int page);
-        }
 
         public PaginationListLoader(Context context, LoadingTask<T> loadingTask) {
             super(context);
             this.loadingTask = loadingTask;
+        }
+
+        public interface LoadingTask<T> {
+            List<T> call(int page);
         }
 
         @Override

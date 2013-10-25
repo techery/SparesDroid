@@ -14,9 +14,10 @@ import de.greenrobot.event.EventBus;
  */
 public abstract class BaseFragment extends Fragment {
     private EventBus eventBus;
+    private Navigator navigator;
 
     public BaseFragment() {
-        eventBus = new EventBus();
+        setEventBus(new EventBus());
     }
 
     @Override
@@ -26,9 +27,15 @@ public abstract class BaseFragment extends Fragment {
 
         Views.inject(this, rootView);
 
+        extractParams();
+
         afterCreateView(rootView);
 
         return rootView;
+    }
+
+    protected void extractParams() {
+
     }
 
     protected void afterCreateView(View rootView) {
@@ -49,7 +56,19 @@ public abstract class BaseFragment extends Fragment {
         eventBus.unregister(this);
     }
 
-    protected EventBus getEventBus() {
+    public EventBus getEventBus() {
         return eventBus;
+    }
+
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
+    }
+
+    public Navigator getNavigator() {
+        return navigator;
+    }
+
+    public void setNavigator(Navigator navigator) {
+        this.navigator = navigator;
     }
 }
