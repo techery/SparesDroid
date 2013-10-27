@@ -1,8 +1,11 @@
 package com.zen.droidparts.ui.fragment;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import butterknife.Views;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseCell<T> extends LinearLayout implements CollectionFragment.BaseCell<T> {
@@ -12,7 +15,16 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
 
     public BaseCell(Context context) {
         super(context);
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(getLayoutResourceId(), this);
+
+        Views.inject(this, view);
+
+        initialUISetup();
     }
+
+    protected abstract void initialUISetup();
 
     @Override
     public void setEventBus(EventBus bus) {
@@ -37,5 +49,6 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
         syncUIStateWithModel();
     }
 
+    protected abstract int getLayoutResourceId();
     protected abstract void syncUIStateWithModel();
 }
