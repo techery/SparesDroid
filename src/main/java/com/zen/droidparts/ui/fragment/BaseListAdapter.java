@@ -40,7 +40,11 @@ public class BaseListAdapter<T> extends ArrayAdapter<T> {
             cell.setEventBus(getEventBus());
         }
 
-        saveState(cell.getState(), position);
+        Bundle b = new Bundle();
+
+        cell.saveState(b);
+
+        saveState(b, position);
 
         cell.prepareForReuse();
         cell.fillWithItem(item);

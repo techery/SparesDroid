@@ -52,8 +52,8 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
         syncUIStateWithModel();
     }
 
-    public Bundle getState() {
-        return null;
+    public void saveState(Bundle b) {
+        
     }
 
     public void restoreState(Bundle bundle) {

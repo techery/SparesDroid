@@ -25,7 +25,7 @@ public abstract class CollectionFragment<T> extends LoadableFragment<T> {
         public void fillWithItem(T item);
         public void prepareForReuse();
         public void setEventBus(EventBus eventBus);
-        public Bundle getState();
+        public void saveState(Bundle b);
         public void restoreState(Bundle bundle);
 
         public interface CellBuilder<T> {
