@@ -17,7 +17,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setEventBus(new EventBus());
+        setEventBus(EventBus.getDefault());
 
         int contentResourse = getContentViewResource();
         if (contentResourse > 0) {
