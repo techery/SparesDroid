@@ -6,6 +6,8 @@ import android.view.View;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>> {
     private BaseListAdapter<T> arrayAdapter;
 
@@ -38,6 +40,12 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
 
     protected T getItemAtPosition(int position) {
         return getAdapter().getItem(position);
+    }
+
+    @Override
+    public void setEventBus(EventBus eventBus) {
+        super.setEventBus(eventBus);
+        getAdapter().setEventBus(getEventBus());
     }
 
     protected abstract void showErrorState();
