@@ -1,6 +1,7 @@
 package com.zen.droidparts.ui.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -49,6 +50,14 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
     public void fillWithItem(T item) {
         setModelObject(item);
         syncUIStateWithModel();
+    }
+
+    public Bundle getState() {
+        return null;
+    }
+
+    public void restoreState(Bundle bundle) {
+
     }
 
     protected abstract int getLayoutResourceId();

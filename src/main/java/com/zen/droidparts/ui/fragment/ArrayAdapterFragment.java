@@ -3,8 +3,6 @@ package com.zen.droidparts.ui.fragment;
 import android.content.Context;
 import android.support.v4.content.Loader;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     protected void afterCreateView(View rootView) {
         super.afterCreateView(rootView);
 
-        arrayAdapter = new BaseListAdapter<T>(getActivity(), getCellBuilder());
+        arrayAdapter = new BaseListAdapter<T>(getActivity(), getCellBuilder(), getEventBus());
     }
 
     protected BaseListAdapter<T> getAdapter() {
@@ -49,32 +47,6 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     protected static abstract class BaseListLoader<T> extends BaseLoader<List<T>> {
         public BaseListLoader(Context context, LoadingTask<List<T>> loadingTask) {
             super(context, loadingTask);
-        }
-    }
-
-    protected class BaseListAdapter<T> extends ArrayAdapter<T> {
-        private final BaseCell.CellBuilder cellBuilder;
-
-        public BaseListAdapter(Context context, BaseCell.CellBuilder cellBuilder) {
-            super(context, -1);
-            this.cellBuilder = cellBuilder;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            BaseCell cell = (BaseCell) convertView;
-            T item = getItem(position);
-
-            if (cell == null) {
-                cell = cellBuilder.build(getContext(), item);
-                cell.setEventBus(getEventBus());
-            }
-
-            cell.prepareForReuse();
-            cell.fillWithItem(item);
-
-
-            return (View) cell;
         }
     }
 }
