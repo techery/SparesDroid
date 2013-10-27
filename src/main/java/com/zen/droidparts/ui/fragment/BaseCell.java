@@ -13,6 +13,7 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
     private T modelObject;
 
     private EventBus eventBus;
+    private int lastPosition;
 
     public BaseCell(Context context) {
         super(context);
@@ -53,11 +54,21 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
     }
 
     public void saveState(Bundle b) {
-        
+
     }
 
     public void restoreState(Bundle bundle) {
 
+    }
+
+    @Override
+    public int getLastPosition() {
+        return this.lastPosition;
+    }
+
+    @Override
+    public void setLastPosition(int position) {
+        this.lastPosition = position;
     }
 
     protected abstract int getLayoutResourceId();

@@ -28,6 +28,9 @@ public abstract class CollectionFragment<T> extends LoadableFragment<T> {
         public void saveState(Bundle b);
         public void restoreState(Bundle bundle);
 
+        public int getLastPosition();
+        public void setLastPosition(int position);
+
         public interface CellBuilder<T> {
             BaseCell build(Context c, T item);
         }

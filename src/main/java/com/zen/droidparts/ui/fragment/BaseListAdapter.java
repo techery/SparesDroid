@@ -44,8 +44,9 @@ public class BaseListAdapter<T> extends ArrayAdapter<T> {
 
         cell.saveState(b);
 
-        saveState(b, position);
+        saveState(b, cell.getLastPosition());
 
+        cell.setLastPosition(position);
         cell.prepareForReuse();
         cell.fillWithItem(item);
         Bundle state = getState(position);
