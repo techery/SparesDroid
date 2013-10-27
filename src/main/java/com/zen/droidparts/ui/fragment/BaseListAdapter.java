@@ -14,7 +14,7 @@ import de.greenrobot.event.EventBus;
  */
 public class BaseListAdapter<T> extends ArrayAdapter<T> {
     private final CollectionFragment.BaseCell.CellBuilder cellBuilder;
-    private final EventBus eventBus;
+    private EventBus eventBus;
     private SparseArray<Bundle> states;
 
     public BaseListAdapter(Context context, CollectionFragment.BaseCell.CellBuilder cellBuilder, EventBus bus) {
@@ -69,4 +69,10 @@ public class BaseListAdapter<T> extends ArrayAdapter<T> {
     public EventBus getEventBus() {
         return eventBus;
     }
+
+    public void setEventBus(EventBus bus) {
+        this.eventBus = bus;
+        notifyDataSetChanged();
+    }
+
 }
