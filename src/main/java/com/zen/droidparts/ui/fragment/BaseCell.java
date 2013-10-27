@@ -24,7 +24,9 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
         initialUISetup();
     }
 
-    protected abstract void initialUISetup();
+    protected void initialUISetup() {
+
+    }
 
     @Override
     public void setEventBus(EventBus bus) {
