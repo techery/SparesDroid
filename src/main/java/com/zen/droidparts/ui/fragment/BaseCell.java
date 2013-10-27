@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseCell<T> extends LinearLayout implements CollectionFragment.BaseCell<T> {
+    private T modelObject;
+
     private EventBus eventBus;
 
     public BaseCell(Context context) {
@@ -20,4 +22,20 @@ public abstract class BaseCell<T> extends LinearLayout implements CollectionFrag
     public EventBus getEventBus() {
         return eventBus;
     }
+
+    public T getModelObject() {
+        return modelObject;
+    }
+
+    public void setModelObject(T modelObject) {
+        this.modelObject = modelObject;
+    }
+
+    @Override
+    public void fillWithItem(T item) {
+        setModelObject(item);
+        syncUIStateWithModel();
+    }
+
+    protected abstract void syncUIStateWithModel();
 }
