@@ -1,10 +1,13 @@
 package com.zen.droidparts.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.zen.droidparts.ui.activity.BaseActivity;
 
 import butterknife.Views;
 import de.greenrobot.event.EventBus;
@@ -65,6 +68,14 @@ public abstract class BaseFragment extends Fragment {
 
     public void onEvent(Events.ReloadEvent reloadEvent) {
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof BaseActivity)) {
+            throw new IllegalArgumentException("BaseFragment have to be attached to instance of BaseActivity");
+        }
     }
 
     public EventBus getEventBus() {
