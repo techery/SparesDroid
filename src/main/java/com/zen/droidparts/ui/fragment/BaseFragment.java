@@ -76,6 +76,15 @@ public abstract class BaseFragment extends Fragment {
         if (!(activity instanceof BaseActivity)) {
             throw new IllegalArgumentException("BaseFragment have to be attached to instance of BaseActivity");
         }
+
+        if (shouldInheritEventBus()) {
+            BaseActivity baseActivity = (BaseActivity) activity;
+            setEventBus(baseActivity.getEventBus());
+        }
+    }
+
+    private boolean shouldInheritEventBus() {
+        return false;
     }
 
     public EventBus getEventBus() {
