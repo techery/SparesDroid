@@ -26,6 +26,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setEventBus(new EventBus());
 
         View rootView = inflater.inflate(getFragmentLayoutResource(), container, false);
 
@@ -43,7 +44,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void afterCreateView(View rootView) {
-        setEventBus(new EventBus());
+
     }
 
     protected abstract int getFragmentLayoutResource();
@@ -51,13 +52,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        eventBus.registerSticky(this);
+        getEventBus().registerSticky(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        eventBus.unregister(this);
+        getEventBus().unregister(this);
     }
 
     public void onEvent(Events.ReloadEvent reloadEvent) {
