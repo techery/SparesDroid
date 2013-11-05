@@ -26,7 +26,9 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setEventBus(new EventBus());
+        if (getEventBus() == null) {
+            setEventBus(new EventBus());
+        }
 
         View rootView = inflater.inflate(getFragmentLayoutResource(), container, false);
 
