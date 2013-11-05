@@ -7,6 +7,12 @@ import butterknife.Views;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseActivity extends ActionBarActivity {
+    public interface Events {
+        class ReloadEvent {
+
+        }
+    }
+
     private EventBus eventBus;
 
     @Override
@@ -35,6 +41,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
         getEventBus().unregister(this);
+    }
+
+    public void onEvent(Events.ReloadEvent reloadEvent) {
+        
     }
 
     protected abstract int getContentViewResource();
