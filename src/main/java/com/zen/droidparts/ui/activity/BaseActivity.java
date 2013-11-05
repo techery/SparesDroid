@@ -19,8 +19,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setEventBus(EventBus.getDefault());
-
         int contentResourse = getContentViewResource();
         if (contentResourse > 0) {
             setContentView(contentResourse);
@@ -51,8 +49,11 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected abstract void afterCreateView(Bundle savedInstanceState);
 
-    public EventBus getEventBus() {
-        return eventBus;
+    public synchronized EventBus getEventBus() {
+        if (this.eventBus == null) {
+            this.eventBus = EventBus.getDefault();
+        }
+        return this.eventBus;
     }
 
     public void setEventBus(EventBus eventBus) {
