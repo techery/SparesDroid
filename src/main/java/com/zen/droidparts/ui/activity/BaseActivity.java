@@ -44,7 +44,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     public void onEvent(Events.ReloadEvent reloadEvent) {
-        
+
     }
 
     protected abstract int getContentViewResource();

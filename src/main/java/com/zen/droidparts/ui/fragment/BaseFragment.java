@@ -21,19 +21,13 @@ public abstract class BaseFragment extends Fragment {
     private Navigator navigator;
 
     public interface Events {
-        class ReloadEvent {
-
-        }
-    }
-
-    public BaseFragment() {
-        setEventBus(new EventBus());
+        class ReloadEvent {}
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(getFragmentLayoutResourse(), container, false);
+        View rootView = inflater.inflate(getFragmentLayoutResource(), container, false);
 
         Views.inject(this, rootView);
 
@@ -49,15 +43,15 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void afterCreateView(View rootView) {
-
+        setEventBus(new EventBus());
     }
 
-    protected abstract int getFragmentLayoutResourse();
+    protected abstract int getFragmentLayoutResource();
 
     @Override
     public void onResume() {
         super.onResume();
-        eventBus.register(this);
+        eventBus.registerSticky(this);
     }
 
     @Override
