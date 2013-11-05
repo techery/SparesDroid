@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class TabbedActivity extends BaseActivity implements ActionBar.TabListener {
     ViewPager viewPager;
-    
+
     @Override
     protected void afterCreateView(Bundle savedInstanceState) {
         setupActionBar();
