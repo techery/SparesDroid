@@ -7,9 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by zen on 11/5/13.
- */
 public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
 
     private final List<TabItem> tabs;
