@@ -83,7 +83,7 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
-    private boolean shouldInheritEventBus() {
+    protected boolean shouldInheritEventBus() {
         return false;
     }
 
