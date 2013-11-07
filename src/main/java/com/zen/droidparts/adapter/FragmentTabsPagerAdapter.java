@@ -11,9 +11,22 @@ public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
 
     private final List<TabItem> tabs;
 
-    public interface TabItem {
-        public String getTitle();
-        public Fragment getFragment();
+    public static class TabItem {
+        private final String title;
+        private final Class fragmentClass;
+
+        public TabItem(String title, Class fragmentClass) {
+            this.title = title;
+            this.fragmentClass = fragmentClass;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public Class getFragmentClass() {
+            return fragmentClass;
+        }
     }
 
     public FragmentTabsPagerAdapter(FragmentManager fm, List<TabItem> items) {
@@ -23,7 +36,14 @@ public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return this.tabs.get(position).getFragment();
+        try {
+            return (Fragment) this.tabs.get(position).getFragmentClass().newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
