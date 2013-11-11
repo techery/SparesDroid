@@ -45,7 +45,9 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     @Override
     public void setEventBus(EventBus eventBus) {
         super.setEventBus(eventBus);
-        getAdapter().setEventBus(getEventBus());
+        if (getAdapter() != null) {
+            getAdapter().setEventBus(getEventBus());
+        }
     }
 
     protected abstract void showErrorState();
