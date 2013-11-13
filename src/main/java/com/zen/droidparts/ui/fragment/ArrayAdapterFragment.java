@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v4.content.Loader;
 import android.view.View;
 
+import com.zen.droidparts.loader.BaseLoader;
+
 import java.util.List;
 
 import de.greenrobot.event.EventBus;

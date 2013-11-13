@@ -2,6 +2,8 @@ package com.zen.droidparts.ui.fragment;
 
 import android.content.Context;
 
+import com.zen.droidparts.loader.BaseAbstractLoader;
+
 import java.util.List;
 
 public abstract class PaginationListFragment<T, LV> extends BaseListFragment<T, LV> {
