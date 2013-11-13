@@ -23,14 +23,14 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
     private LoaderManager loaderManager;
     private final Context context;
     private final int loaderID;
-    private final Class<BaseAbstractLoader<T>> loaderClass;
+    private final Class<Loader<T>> loaderClass;
     private DataControllerCallBack<T> dataControllerCallBack;
 
-    public DataController(Context context, LoaderManager loaderManager, Class<BaseAbstractLoader<T>> loaderClass) {
+    public DataController(Context context, LoaderManager loaderManager, Class<Loader<T>> loaderClass) {
         this(context, loaderManager, DEFAULT_LOADER, loaderClass);
     }
 
-    public DataController(Context context, LoaderManager loaderManager, int loaderID, Class<BaseAbstractLoader<T>> loaderClass) {
+    public DataController(Context context, LoaderManager loaderManager, int loaderID, Class<Loader<T>> loaderClass) {
         this.loaderManager = loaderManager;
         this.context = context;
         this.loaderID = loaderID;

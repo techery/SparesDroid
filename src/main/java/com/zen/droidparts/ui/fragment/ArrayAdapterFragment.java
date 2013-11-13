@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.Loader;
 import android.view.View;
 
-import com.zen.droidparts.loader.BaseLoader;
+import com.zen.droidparts.loader.BaseSimpleTaskLoader;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     protected abstract void preProcessResult(List<T> result);
     protected abstract BaseCell.CellBuilder getCellBuilder();
 
-    protected static abstract class BaseListLoader<T> extends BaseLoader<List<T>> {
+    protected static abstract class BaseListLoader<T> extends BaseSimpleTaskLoader<List<T>> {
         public BaseListLoader(Context context, LoadingTask<List<T>> loadingTask) {
             super(context, loadingTask);
         }
