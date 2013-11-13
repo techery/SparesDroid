@@ -18,7 +18,6 @@ import de.greenrobot.event.EventBus;
  */
 public abstract class BaseFragment extends Fragment {
     private EventBus eventBus;
-    private Navigator navigator;
 
     public interface Events {
         class ReloadEvent {}
@@ -70,6 +69,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
         if (!(activity instanceof BaseActivity)) {
             throw new IllegalArgumentException("BaseFragment have to be attached to instance of BaseActivity");
         }
@@ -92,11 +92,4 @@ public abstract class BaseFragment extends Fragment {
         this.eventBus = eventBus;
     }
 
-    public Navigator getNavigator() {
-        return navigator;
-    }
-
-    public void setNavigator(Navigator navigator) {
-        this.navigator = navigator;
-    }
 }

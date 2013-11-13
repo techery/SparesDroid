@@ -1,7 +1,9 @@
-package com.zen.droidparts.ui.fragment;
+package com.zen.droidparts.ui.fragment.loadable.collection;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import com.zen.droidparts.ui.fragment.loadable.LoadableFragment;
 
 import de.greenrobot.event.EventBus;
 
@@ -35,4 +37,6 @@ public abstract class CollectionFragment<T> extends LoadableFragment<T> {
             BaseCell build(Context c, T item);
         }
     }
+
+
 }

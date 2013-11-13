@@ -1,4 +1,4 @@
-package com.zen.droidparts.ui.fragment;
+package com.zen.droidparts.ui.fragment.loadable.collection;
 
 import android.view.View;
 import android.widget.AdapterView;

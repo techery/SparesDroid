@@ -16,6 +16,10 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
         public void processError(Throwable throwable);
     }
 
+    public interface LoaderFactory {
+        public Loader createLoader(Context context, Bundle bundle);
+    }
+
     public interface Events {
         public class ReloadEvent {}
     }
@@ -23,26 +27,22 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
     private LoaderManager loaderManager;
     private final Context context;
     private final int loaderID;
-    private final Class<Loader<T>> loaderClass;
+    private final LoaderFactory loaderFactory;
     private DataControllerCallBack<T> dataControllerCallBack;
 
-    public DataController(Context context, LoaderManager loaderManager, Class<Loader<T>> loaderClass) {
-        this(context, loaderManager, DEFAULT_LOADER, loaderClass);
+    public DataController(Context context, LoaderManager loaderManager, LoaderFactory factory) {
+        this(context, loaderManager, DEFAULT_LOADER, factory);
     }
 
-    public DataController(Context context, LoaderManager loaderManager, int loaderID, Class<Loader<T>> loaderClass) {
+    public DataController(Context context, LoaderManager loaderManager, int loaderID, LoaderFactory factory) {
         this.loaderManager = loaderManager;
         this.context = context;
         this.loaderID = loaderID;
-        this.loaderClass = loaderClass;
+        this.loaderFactory = factory;
     }
 
     public LoaderManager getLoaderManager() {
         return loaderManager;
-    }
-
-    public final void setLoaderManager(LoaderManager loaderManager) {
-        this.loaderManager = loaderManager;
     }
 
     public Context getContext() {
@@ -71,14 +71,7 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
 
     @Override
     public final Loader<T> onCreateLoader(int i, Bundle bundle) {
-        try {
-            return loaderClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.loaderFactory.createLoader(getContext(), bundle);
     }
 
     @Override
@@ -92,6 +85,6 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
 
     @Override
     public final void onLoaderReset(Loader<T> objectLoader) {
-
+        objectLoader.reset();
     }
 }

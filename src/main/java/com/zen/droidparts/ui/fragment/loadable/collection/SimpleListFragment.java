@@ -1,4 +1,4 @@
-package com.zen.droidparts.ui.fragment;
+package com.zen.droidparts.ui.fragment.loadable.collection;
 
 import android.content.Context;
 
@@ -12,7 +12,8 @@ public abstract class SimpleListFragment<T, LV> extends BaseListFragment<T, LV> 
     }
 
     @Override
-    protected void preProcessResult(List<T> result) {
+    public void processResult(List<T> result) {
         getAdapter().clear();
+        super.processResult(result);
     }
 }

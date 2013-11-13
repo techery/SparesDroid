@@ -1,9 +1,9 @@
-package com.zen.droidparts.ui.fragment;
+package com.zen.droidparts.ui.fragment.loadable.collection;
 
 import android.content.Context;
-import android.support.v4.content.Loader;
 import android.view.View;
 
+import com.zen.droidparts.adapter.BaseListAdapter;
 import com.zen.droidparts.loader.BaseSimpleTaskLoader;
 
 import java.util.List;
@@ -25,19 +25,12 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
     }
 
     @Override
-    protected void processResult(List<T> result) {
-        preProcessResult(result);
-        
+    public void processResult(List<T> result) {
         for (T res : result) {
             arrayAdapter.add(res);
         }
 
         arrayAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void processError(Loader<List<T>> listLoader) {
-        showErrorState();
     }
 
     protected T getItemAtPosition(int position) {
@@ -52,8 +45,6 @@ public abstract class ArrayAdapterFragment<T> extends CollectionFragment<List<T>
         }
     }
 
-    protected abstract void showErrorState();
-    protected abstract void preProcessResult(List<T> result);
     protected abstract BaseCell.CellBuilder getCellBuilder();
 
     protected static abstract class BaseListLoader<T> extends BaseSimpleTaskLoader<List<T>> {

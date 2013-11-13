@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.zen.droidparts.ui.fragment.CollectionFragment;
+import com.zen.droidparts.ui.fragment.loadable.collection.CollectionFragment;
 
 import de.greenrobot.event.EventBus;
 
