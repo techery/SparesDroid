@@ -3,9 +3,9 @@ package com.zen.droidparts.ui.fragment.loadable.collection;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.zen.droidparts.R;
+import com.zen.droidparts.adapter.DataListAdapter;
 
-public abstract class BaseListFragment<T, LV> extends ArrayAdapterFragment<T> implements AdapterView.OnItemClickListener {
+public abstract class BaseListFragment<T, ET, LV> extends CollectionFragment<T> implements AdapterView.OnItemClickListener {
     protected LV listView;
 
     @Override
@@ -14,10 +14,6 @@ public abstract class BaseListFragment<T, LV> extends ArrayAdapterFragment<T> im
 
         setListView(findListView(rootView));
         setupOnItemClickListener(getListView());
-    }
-
-    protected LV findListView(View rootView) {
-        return (LV) rootView.findViewById(R.id.content_list);
     }
 
     public LV getListView() {
@@ -29,12 +25,23 @@ public abstract class BaseListFragment<T, LV> extends ArrayAdapterFragment<T> im
         linkAdapter(this.listView);
     }
 
-    protected abstract void setupOnItemClickListener(LV listView);
-    protected abstract void linkAdapter(LV listView);
+    @Override
+    public void setDataAdapter(DataListAdapter<T> dataAdapter) {
+        super.setDataAdapter(dataAdapter);
+        getDataAdapter().setDataController(getDataController());
+        if (getListView() != null) {
+            linkAdapter(getListView());
+        }
+    }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        T item = getItemAtPosition(position);
+        ET item = (ET) getDataAdapter().getItem(position);
 
-        getEventBus().post(new Events.ItemSelectionEvent<T>(item));
+        getEventBus().post(new DataListAdapter.Events.ItemSelectionEvent<ET>(item));
     }
+
+    protected abstract void setupOnItemClickListener(LV listView);
+    protected abstract void linkAdapter(LV listView);
+    protected abstract LV findListView(View rootView);
+
 }

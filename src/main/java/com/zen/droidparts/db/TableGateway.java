@@ -262,6 +262,10 @@ public class TableGateway<OBJ_TYPE extends DbObject> {
 
 
 
+    public Cursor findAllCursor(){
+        return rawQueryCursor(null, null);
+    }
+
     public ArrayList<OBJ_TYPE> findAll(){
         return rawQuery(null, null);
     }

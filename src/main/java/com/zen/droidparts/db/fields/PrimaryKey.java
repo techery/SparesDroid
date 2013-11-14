@@ -12,9 +12,8 @@ import com.zen.droidparts.db.accessors.IntAccessor;
 public class PrimaryKey extends  Field {
 
     public PrimaryKey(IntAccessor<?> accessor){
-        super("id", accessor);
+        super("_id", accessor);
         isPrimaryKey = true;
         setAutoincrement(true);
-
     }
 }

@@ -1,42 +1,32 @@
 package com.zen.droidparts.ui.fragment.loadable.collection;
 
-import android.content.Context;
-import android.os.Bundle;
-
+import com.zen.droidparts.adapter.DataListAdapter;
 import com.zen.droidparts.ui.fragment.loadable.LoadableFragment;
+import com.zen.droidparts.ui.view.cell.BaseCell;
 
 import de.greenrobot.event.EventBus;
 
 public abstract class CollectionFragment<T> extends LoadableFragment<T> {
+    protected DataListAdapter<T> dataAdapter;
 
-    public interface Events {
-        public class ItemSelectionEvent<T> {
-            private final T item;
-
-            public ItemSelectionEvent(T item) {
-                this.item = item;
-            }
-
-            public T getItem() {
-                return item;
-            }
+    @Override
+    public void setEventBus(EventBus eventBus) {
+        super.setEventBus(eventBus);
+        if (getDataAdapter() != null) {
+            getDataAdapter().getController().setEventBus(getEventBus());
         }
     }
 
-    public interface BaseCell<T> {
-        public void fillWithItem(T item);
-        public void prepareForReuse();
-        public void setEventBus(EventBus eventBus);
-        public void saveState(Bundle b);
-        public void restoreState(Bundle bundle);
+    protected abstract BaseCell.CellBuilder getCellBuilder();
 
-        public int getLastPosition();
-        public void setLastPosition(int position);
-
-        public interface CellBuilder<T> {
-            BaseCell build(Context c, T item);
-        }
+    public DataListAdapter<T> getDataAdapter() {
+        return dataAdapter;
     }
 
+    public void setDataAdapter(DataListAdapter<T> dataAdapter) {
+        this.dataAdapter = dataAdapter;
 
+        getDataAdapter().getController().setEventBus(getEventBus());
+        getDataAdapter().getController().setCellBuilder(getCellBuilder());
+    }
 }

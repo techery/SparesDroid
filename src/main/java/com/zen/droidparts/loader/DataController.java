@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-/**
- * Created by zen on 10/28/13.
- */
 public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
     private static final int DEFAULT_LOADER = 1;
+
+    private DataLoaderObserver dataLoaderObserver;
 
     public interface DataControllerCallBack<T> {
         public void processResult(T result);
@@ -39,6 +38,7 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
         this.context = context;
         this.loaderID = loaderID;
         this.loaderFactory = factory;
+        this.dataLoaderObserver = new DataLoaderObserver();
     }
 
     public LoaderManager getLoaderManager() {
@@ -62,10 +62,12 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
     }
 
     public final void load() {
+        getDataLoaderObserver().sendOnStartLoading();
         getLoaderManager().initLoader(getLoaderID(), null, this);
     }
 
     public final void reload() {
+        getDataLoaderObserver().sendOnStartLoading();
         getLoaderManager().restartLoader(getLoaderID(), null, this);
     }
 
@@ -78,13 +80,23 @@ public class DataController<T> implements LoaderManager.LoaderCallbacks<T> {
     public final void onLoadFinished(Loader<T> objectLoader, T o) {
         if (o != null) {
             getDataControllerCallBack().processResult(o);
+            getDataLoaderObserver().sendOnFinishLoading();
         } else {
             getDataControllerCallBack().processError(null);
+            getDataLoaderObserver().sendOnError();
         }
     }
 
     @Override
     public final void onLoaderReset(Loader<T> objectLoader) {
         objectLoader.reset();
+    }
+
+    public DataLoaderObserver getDataLoaderObserver() {
+        return dataLoaderObserver;
+    }
+
+    public void setDataLoaderObserver(DataLoaderObserver dataLoaderObserver) {
+        this.dataLoaderObserver = dataLoaderObserver;
     }
 }

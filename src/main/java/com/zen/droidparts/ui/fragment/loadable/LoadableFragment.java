@@ -1,5 +1,7 @@
 package com.zen.droidparts.ui.fragment.loadable;
 
+import android.view.View;
+
 import com.zen.droidparts.loader.DataController;
 import com.zen.droidparts.ui.fragment.BaseFragment;
 
@@ -8,23 +10,47 @@ public abstract class LoadableFragment<T> extends BaseFragment implements DataCo
     private DataController<T> dataController;
 
     @Override
+    protected void afterCreateView(View rootView) {
+        super.afterCreateView(rootView);
+        setupDataController();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         load();
     }
 
     private void load() {
-        dataController = new DataController<T>(getActivity(), getLoaderManager(), getLoaderFactory());
-        dataController.setDataControllerCallBack(this);
         dataController.load();
     }
 
+    protected void setupDataController() {
+        setDataController(new DataController<T>(getActivity(), getLoaderManager(), getLoaderFactory()));
+        getDataController().setDataControllerCallBack(this);
+    }
+
     protected void reload() {
-        dataController.reload();
+        getDataController().reload();
     }
 
     protected abstract DataController.LoaderFactory getLoaderFactory();
 
-    public abstract void processResult(T result);
-    public abstract void processError(Throwable throwable);
+    public void processResult(T result) {
+
+    }
+
+    public void processError(Throwable throwable) {
+
+    }
+
+    public DataController<T> getDataController() {
+        return dataController;
+    }
+
+    public void setDataController(DataController<T> dataController) {
+        this.dataController = dataController;
+    }
+
+
 }
