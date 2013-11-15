@@ -4,7 +4,7 @@ import com.zen.droidparts.utils.KeyValueStorage;
 
 import de.greenrobot.event.EventBus;
 
-public class SessionService<SESSION_CLASS> {
+public class SessionHolder<SESSION_CLASS> {
     private static String SESSION_KEY = "SESSION_KEY";
 
     public interface Events {
@@ -33,7 +33,7 @@ public class SessionService<SESSION_CLASS> {
     private final KeyValueStorage storage;
     private final EventBus eventBus;
 
-    public SessionService(KeyValueStorage storage, Class<SESSION_CLASS> cls, EventBus bus) {
+    public SessionHolder(KeyValueStorage storage, Class<SESSION_CLASS> cls, EventBus bus) {
         this.typeClass = cls;
         this.storage = storage;
         this.eventBus = bus;
