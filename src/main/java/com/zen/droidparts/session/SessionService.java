@@ -1,14 +1,16 @@
 package com.zen.droidparts.session;
 
-import android.content.Context;
+import com.zen.droidparts.utils.KeyValueStorage;
 
-import com.zen.droidparts.utils.ComplexPreferenceStorage;
-
-public class SessionService<SESSION_CLASS extends SessionService.Session> extends ComplexPreferenceStorage<SESSION_CLASS> {
+public class SessionService<SESSION_CLASS extends SessionService.Session> {
     private static String SESSION_KEY = "SESSION_KEY";
 
-    public SessionService(Context ctx, Class<SESSION_CLASS> cls) {
-        super(ctx, cls);
+    private final Class<SESSION_CLASS> typeClass;
+    private final KeyValueStorage storage;
+
+    public SessionService(KeyValueStorage storage, Class<SESSION_CLASS> cls) {
+        this.typeClass = cls;
+        this.storage = storage;
     }
 
     public static class Session {
@@ -16,15 +18,15 @@ public class SessionService<SESSION_CLASS extends SessionService.Session> extend
     }
 
     public void saveSession(SESSION_CLASS session) {
-        putObject(SESSION_KEY, session);
+        this.storage.putObject(SESSION_KEY, session);
     }
 
     public void destroySession() {
-        putObject(SESSION_KEY, null);
+        this.storage.putObject(SESSION_KEY, null);
     }
 
     public SESSION_CLASS getActiveSession() {
-        return getObject(SESSION_KEY);
+        return this.storage.getObject(SESSION_KEY, this.typeClass);
     }
 
     public boolean hasActiveSession() {

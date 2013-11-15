@@ -21,9 +21,9 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int contentResourse = getContentViewResource();
-        if (contentResourse > 0) {
-            setContentView(contentResourse);
+        int contentResourсe = getContentViewResource();
+        if (contentResourсe > 0) {
+            setContentView(contentResourсe);
         }
 
         Views.inject(this);
@@ -31,7 +31,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         if (getApplication() instanceof BaseApplication) {
             BaseApplication app = (BaseApplication) getApplication();
             app.getObjectGraph().inject(this);
-        }               
+        }
 
         afterCreateView(savedInstanceState);
     }
