@@ -59,7 +59,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     protected abstract int getContentViewResource();
-    protected abstract void afterCreateView(Bundle savedInstanceState);
+
+    protected void afterCreateView(Bundle savedInstanceState) {
+
+    }
 
     public synchronized EventBus getEventBus() {
         return this.eventBus;
