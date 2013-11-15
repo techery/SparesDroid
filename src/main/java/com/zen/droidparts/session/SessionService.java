@@ -24,7 +24,7 @@ public class SessionService<SESSION_CLASS> {
             }
         }
 
-        public class SessionDestoyed  extends SessionChanged {
+        public class SessionDestroyed  extends SessionChanged {
 
         }
     }
