@@ -1,6 +1,7 @@
 package com.zen.droidparts.loader;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
 import java.util.logging.Level;
@@ -12,6 +13,8 @@ import java.util.logging.Logger;
 public abstract class BaseAbstractLoader<T> extends AsyncTaskLoader<T> {
     private Throwable lastError;
     private T cachedResult;
+    private Bundle params;
+
 
     public BaseAbstractLoader(Context context) {
         super(context);
@@ -64,5 +67,13 @@ public abstract class BaseAbstractLoader<T> extends AsyncTaskLoader<T> {
 
     public void setLogger(Logger logger) {
 
+    }
+
+    public Bundle getParams() {
+        return params;
+    }
+
+    public void setParams(Bundle params) {
+        this.params = params;
     }
 }

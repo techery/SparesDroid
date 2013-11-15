@@ -4,9 +4,11 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.zen.droidparts.adapter.DataListAdapter;
+import com.zen.droidparts.ui.view.cell.BaseCell;
 
 public abstract class BaseListFragment<T, ET, LV> extends CollectionFragment<T> implements AdapterView.OnItemClickListener {
     protected LV listView;
+    private BaseCell.CellBuilder cellBuilder;
 
     @Override
     protected void afterCreateView(View rootView) {
@@ -28,7 +30,11 @@ public abstract class BaseListFragment<T, ET, LV> extends CollectionFragment<T> 
     @Override
     public void setDataAdapter(DataListAdapter<T> dataAdapter) {
         super.setDataAdapter(dataAdapter);
-        getDataAdapter().setDataController(getDataController());
+
+        if (getContentLoader() != null) {
+            getDataAdapter().setContentLoader(getContentLoader());
+        }
+
         if (getListView() != null) {
             linkAdapter(getListView());
         }
@@ -36,8 +42,17 @@ public abstract class BaseListFragment<T, ET, LV> extends CollectionFragment<T> 
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ET item = (ET) getDataAdapter().getItem(position);
-
+        
         getEventBus().post(new DataListAdapter.Events.ItemSelectionEvent<ET>(item));
+    }
+
+    protected BaseCell.CellBuilder getCellBuilder() {
+        return cellBuilder;
+    }
+
+    public void setCellBuilder(BaseCell.CellBuilder cellBuilder) {
+        this.cellBuilder = cellBuilder;
+        getDataAdapter().getController().setCellBuilder(getCellBuilder());
     }
 
     protected abstract void setupOnItemClickListener(LV listView);

@@ -25,8 +25,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         if (getApplication() instanceof BaseApplication) {
-            BaseApplication app = (BaseApplication) getApplication();
-            app.getObjectGraph().inject(this);
+            getBaseApplication().getObjectGraph().inject(this);
         }
 
         int contentResourсe = getContentViewResource();
@@ -49,6 +48,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onPause() {
         super.onPause();
         getEventBus().unregister(this);
+    }
+
+    public BaseApplication getBaseApplication() {
+        return (BaseApplication)getApplication();
     }
 
     public void onEvent(Events.ReloadEvent reloadEvent) {

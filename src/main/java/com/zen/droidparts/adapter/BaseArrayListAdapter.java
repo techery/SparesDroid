@@ -4,19 +4,16 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.zen.droidparts.loader.DataController;
+import com.zen.droidparts.loader.ContentLoader;
 import com.zen.droidparts.ui.view.cell.BaseCell;
 
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class BaseArrayListAdapter<T> extends ArrayAdapter<T> implements
-        DataController.DataControllerCallBack<List<T>>,
-        DataListAdapter<List<T>>
-{
+public class BaseArrayListAdapter<T> extends ArrayAdapter<T> implements DataListAdapter<List<T>>,ContentLoader.ContentLoadingObserving<List<T>> {
     private AdapterController adapterController;
-    private DataController<List<T>> dataController;
+    private ContentLoader<List<T>> contentLoader;
 
     public BaseArrayListAdapter(Context context) {
         this(context, null);
@@ -46,19 +43,27 @@ public class BaseArrayListAdapter<T> extends ArrayAdapter<T> implements
         return adapterController;
     }
 
-    public void setDataController(DataController<List<T>> dataController) {
-        this.dataController = dataController;
-        if (this.dataController != null) {
-            this.dataController.setDataControllerCallBack(this);
+    public void setContentLoader(ContentLoader<List<T>> contentLoader) {
+        this.contentLoader = contentLoader;
+        if (this.contentLoader != null) {
+            this.contentLoader.getContentLoaderObserver().registerObserver(this);
+            if (this.contentLoader.getResult() != null) {
+                onFinishLoading(this.contentLoader.getResult());
+            }
         }
     }
 
-    public DataController<List<T>> getDataController() {
-        return dataController;
+    public ContentLoader<List<T>> getContentLoader() {
+        return contentLoader;
     }
 
     @Override
-    public void processResult(List<T> result) {
+    public void onStartLoading() {
+
+    }
+
+    @Override
+    public void onFinishLoading(List<T> result) {
         for (T res : result) {
             this.add(res);
         }
@@ -67,7 +72,7 @@ public class BaseArrayListAdapter<T> extends ArrayAdapter<T> implements
     }
 
     @Override
-    public void processError(Throwable throwable) {
+    public void onError(Throwable throwable) {
 
     }
 }

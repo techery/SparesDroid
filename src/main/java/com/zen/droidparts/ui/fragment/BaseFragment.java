@@ -12,10 +12,6 @@ import com.zen.droidparts.ui.activity.BaseActivity;
 import butterknife.Views;
 import de.greenrobot.event.EventBus;
 
-/**
- *
- * Created by zen on 10/21/13.
- */
 public abstract class BaseFragment extends Fragment {
     private EventBus eventBus;
 
@@ -25,10 +21,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (getEventBus() == null) {
-            setEventBus(new EventBus());
-        }
-
         View rootView = inflater.inflate(getFragmentLayoutResource(), container, false);
 
         Views.inject(this, rootView);
@@ -74,9 +66,13 @@ public abstract class BaseFragment extends Fragment {
             throw new IllegalArgumentException("BaseFragment have to be attached to instance of BaseActivity");
         }
 
-        if (shouldInheritEventBus()) {
-            BaseActivity baseActivity = (BaseActivity) activity;
-            setEventBus(baseActivity.getEventBus());
+        BaseActivity baseActivity = (BaseActivity) activity;
+        baseActivity.getBaseApplication().getObjectGraph().inject(this);
+
+        if (!shouldInheritEventBus()) {
+            if (getEventBus() == null) {
+                setEventBus(new EventBus());
+            }
         }
     }
 

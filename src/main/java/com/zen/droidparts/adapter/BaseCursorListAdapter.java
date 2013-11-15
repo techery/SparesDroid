@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 
-import com.zen.droidparts.loader.DataController;
+import com.zen.droidparts.loader.ContentLoader;
 import com.zen.droidparts.ui.view.cell.BaseCell;
 
 import de.greenrobot.event.EventBus;
 
-public class BaseCursorListAdapter extends CursorAdapter implements DataListAdapter<Cursor>,DataController.DataControllerCallBack<Cursor> {
-    private DataController<Cursor> dataController;
+public class BaseCursorListAdapter extends CursorAdapter implements DataListAdapter<Cursor>,ContentLoader.ContentLoadingObserving<Cursor> {
+    private ContentLoader<Cursor> contentLoader;
     private AdapterController adapterController;
 
     public BaseCursorListAdapter(Context context) {
@@ -39,14 +39,19 @@ public class BaseCursorListAdapter extends CursorAdapter implements DataListAdap
     }
 
     @Override
-    public void setDataController(DataController<Cursor> dataController) {
-        this.dataController = dataController;
-        this.dataController.setDataControllerCallBack(this);
+    public void setContentLoader(ContentLoader<Cursor> contentLoader) {
+        this.contentLoader = contentLoader;
+        if (this.contentLoader != null) {
+            this.contentLoader.getContentLoaderObserver().registerObserver(this);
+            if (this.contentLoader.getResult() != null) {
+                onFinishLoading(this.contentLoader.getResult());
+            }
+        }
     }
 
     @Override
-    public DataController<Cursor> getDataController() {
-        return this.dataController;
+    public ContentLoader<Cursor> getContentLoader() {
+        return this.contentLoader;
     }
 
     @Override
@@ -54,8 +59,14 @@ public class BaseCursorListAdapter extends CursorAdapter implements DataListAdap
         return this.adapterController;
     }
 
+
     @Override
-    public void processResult(Cursor result) {
+    public void onStartLoading() {
+
+    }
+
+    @Override
+    public void onFinishLoading(Cursor result) {
         result.moveToPosition(-1);
         result.moveToNext();
         swapCursor(result);
@@ -63,9 +74,7 @@ public class BaseCursorListAdapter extends CursorAdapter implements DataListAdap
     }
 
     @Override
-    public void processError(Throwable throwable) {
+    public void onError(Throwable throwable) {
 
     }
-
-
 }

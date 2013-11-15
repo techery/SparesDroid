@@ -5,11 +5,8 @@ import android.support.v4.app.LoaderManager;
 
 import java.util.List;
 
-/**
- * Created by zen on 10/28/13.
- */
-public class CollectionController<T> extends DataController<List<T>> {
-    public CollectionController(Context context, LoaderManager loaderManager, LoaderFactory factory) {
+public class CollectionController<T> extends ContentLoaderController<List<T>> {
+    public CollectionController(Context context, LoaderManager loaderManager, LoaderCreator factory) {
         super(context, loaderManager, factory);
     }
 }

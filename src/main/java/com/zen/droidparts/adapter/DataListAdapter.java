@@ -2,14 +2,14 @@ package com.zen.droidparts.adapter;
 
 import android.widget.ListAdapter;
 
-import com.zen.droidparts.loader.DataController;
+import com.zen.droidparts.loader.ContentLoader;
 
 /**
  * Created by zen on 11/13/13.
  */
 public interface DataListAdapter<T> extends ListAdapter {
-    public void setDataController(DataController<T> dataController);
-    public DataController<T> getDataController();
+    public void setContentLoader(ContentLoader<T> contentLoader);
+    public ContentLoader<T> getContentLoader();
     public AdapterController getController();
 
     public interface Events {
