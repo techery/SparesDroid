@@ -4,14 +4,20 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-public class ComplexPreferenceStorage extends PreferenceStorage implements KeyValueStorage {
+public class ComplexPreferenceStorage implements KeyValueStorage {
 
-    public ComplexPreferenceStorage(Context ctx) {
-        super(ctx);
+    private final PreferenceStorage preferenceStorage;
+
+    public ComplexPreferenceStorage(Context context) {
+        this(new PreferenceStorage(context));
+    }
+
+    public ComplexPreferenceStorage(PreferenceStorage preferenceStorage) {
+        this.preferenceStorage = preferenceStorage;
     }
 
     public <T> T getObject(String key, Class<T> typeClass) {
-        String json = getString(key);
+        String json = this.preferenceStorage.getString(key);
 
         if (json != null) {
             Gson gson = new Gson();
@@ -24,9 +30,9 @@ public class ComplexPreferenceStorage extends PreferenceStorage implements KeyVa
     public <T> void putObject(String key, T obj) {
         Gson gson = new Gson();
         if (obj != null) {
-            putString(key, gson.toJson(obj));
+            this.preferenceStorage.putString(key, gson.toJson(obj));
         } else {
-            putString(key, null);
+            this.preferenceStorage.putString(key, null);
         }
     }
 }

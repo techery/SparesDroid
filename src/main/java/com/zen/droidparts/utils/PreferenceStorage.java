@@ -5,23 +5,21 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class PreferenceStorage {
-    private final Context context;
 
-    public PreferenceStorage(Context ctx) {
-        this.context = ctx;
+    private final SharedPreferences appSharedPrefs;
+
+    public PreferenceStorage(Context context) {
+        this.appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
     public String getString(String key) {
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(this.context.getApplicationContext());
-        return appSharedPrefs.getString(key, null);
+        return this.appSharedPrefs.getString(key, null);
     }
 
     public void putString(String key, String value) {
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(this.context.getApplicationContext());
-        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        SharedPreferences.Editor prefsEditor = this.appSharedPrefs.edit();
         prefsEditor.putString(key, value);
         prefsEditor.commit();
     }
 }
+
