@@ -2,7 +2,7 @@ package com.zen.droidparts.session;
 
 import com.zen.droidparts.utils.KeyValueStorage;
 
-public class SessionService<SESSION_CLASS extends SessionService.Session> {
+public class SessionService<SESSION_CLASS> {
     private static String SESSION_KEY = "SESSION_KEY";
 
     private final Class<SESSION_CLASS> typeClass;
@@ -11,10 +11,6 @@ public class SessionService<SESSION_CLASS extends SessionService.Session> {
     public SessionService(KeyValueStorage storage, Class<SESSION_CLASS> cls) {
         this.typeClass = cls;
         this.storage = storage;
-    }
-
-    public static class Session {
-
     }
 
     public void saveSession(SESSION_CLASS session) {
