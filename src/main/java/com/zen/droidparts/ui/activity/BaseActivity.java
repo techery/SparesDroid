@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.zen.droidparts.BaseApplication;
 
+import javax.inject.Inject;
+
 import butterknife.Views;
 import de.greenrobot.event.EventBus;
 
@@ -15,11 +17,17 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
     }
 
-    private EventBus eventBus;
+    @Inject
+    EventBus eventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getApplication() instanceof BaseApplication) {
+            BaseApplication app = (BaseApplication) getApplication();
+            app.getObjectGraph().inject(this);
+        }
 
         int contentResourсe = getContentViewResource();
         if (contentResourсe > 0) {
@@ -27,11 +35,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         Views.inject(this);
-
-        if (getApplication() instanceof BaseApplication) {
-            BaseApplication app = (BaseApplication) getApplication();
-            app.getObjectGraph().inject(this);
-        }
 
         afterCreateView(savedInstanceState);
     }
@@ -53,13 +56,9 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     protected abstract int getContentViewResource();
-
     protected abstract void afterCreateView(Bundle savedInstanceState);
 
     public synchronized EventBus getEventBus() {
-        if (this.eventBus == null) {
-            this.eventBus = EventBus.getDefault();
-        }
         return this.eventBus;
     }
 
