@@ -42,7 +42,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getEventBus().register(this);
+        getEventBus().registerSticky(this);
     }
 
     @Override
