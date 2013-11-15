@@ -3,6 +3,8 @@ package com.zen.droidparts.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.zen.droidparts.BaseApplication;
+
 import butterknife.Views;
 import de.greenrobot.event.EventBus;
 
@@ -25,6 +27,11 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         Views.inject(this);
+
+        if (getApplication() instanceof BaseApplication) {
+            BaseApplication app = (BaseApplication) getApplication();
+            app.getObjectGraph().inject(this);
+        }               
 
         afterCreateView(savedInstanceState);
     }

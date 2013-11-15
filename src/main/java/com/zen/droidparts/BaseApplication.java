@@ -9,17 +9,20 @@ import dagger.ObjectGraph;
  */
 public abstract class BaseApplication extends Application {
     private ObjectGraph objectGraph;
-    
+
     @Override
     public void onCreate() {
         super.onCreate();
-
-        objectGraph = ObjectGraph.create(getModules());
+        setObjectGraph(ObjectGraph.create(getModules()));
     }
 
-    protected abstract Object[] getModules();
+    protected void setObjectGraph(ObjectGraph objectGraph) {
+        this.objectGraph = objectGraph;
+    }
 
     public ObjectGraph getObjectGraph() {
         return objectGraph;
     }
+
+    protected abstract Object[] getModules();
 }
