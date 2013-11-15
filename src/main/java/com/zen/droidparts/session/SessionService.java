@@ -46,7 +46,7 @@ public class SessionService<SESSION_CLASS> {
 
     public void destroySession() {
         this.storage.putObject(SESSION_KEY, null);
-        this.eventBus.post(new Events.SessionDestoyed());
+        this.eventBus.post(new Events.SessionDestroyed());
     }
 
     public SESSION_CLASS getActiveSession() {
