@@ -3,7 +3,8 @@ package com.zen.droidparts.loader;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.noveogroup.android.log.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by zen on 10/28/13.
@@ -47,7 +48,7 @@ public abstract class BaseAbstractLoader<T> extends AsyncTaskLoader<T> {
 
     private void logException(Exception e) {
         if (getLogger() != null) {
-            getLogger().e(e);
+            getLogger().log(Level.WARNING, e.getLocalizedMessage());
         }
     }
 
