@@ -8,14 +8,22 @@ import android.content.Intent;
  */
 public class BaseRouter {
     private Activity activity;
-
+    
     protected void startActivityOfClassWithoutParams(Class<?> activityClass) {
         Intent intent = new Intent(this.activity, activityClass);
         this.activity.startActivity(intent);
     }
 
-    public void andFinish() {
-        this.activity.finish();
+    private class RouteEnd {
+        public void andFinish() {
+            activity.finish();
+        }
+    }
+
+    RouteEnd routeEnd = new RouteEnd();
+
+    protected RouteEnd routeEnd() {
+        return routeEnd;
     }
 
     public void setActivity(Activity activity) {
