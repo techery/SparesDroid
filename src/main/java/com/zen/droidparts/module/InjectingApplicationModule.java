@@ -22,33 +22,25 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Module(library = true)
 public class InjectingApplicationModule {
-    private final BaseApplicationWithInjector baseApplicationWithInjector;
-    private final Injector injector;
-
-    public InjectingApplicationModule(BaseApplicationWithInjector baseApplicationWithInjector, Injector injector) {
-        this.baseApplicationWithInjector = baseApplicationWithInjector;
-        this.injector = injector;
+    @Provides
+    @Singleton
+    @Application
+    Context provideContext(BaseApplicationWithInjector baseApplicationWithInjector) {
+        return baseApplicationWithInjector.getApplicationContext();
     }
 
     @Provides
     @Singleton
     @Application
-    Context provideContext() {
-        return this.baseApplicationWithInjector.getApplicationContext();
-    }
-
-    @Provides
-    @Singleton
-    @Application
-    ObjectGraph provideObjectGraph() {
+    ObjectGraph provideObjectGraph(BaseApplicationWithInjector baseApplicationWithInjector) {
         return baseApplicationWithInjector.getObjectGraph();
     }
 
     @Provides
     @Singleton
     @Application
-    Injector provideInjector() {
-        return injector;
+    Injector provideInjector(BaseApplicationWithInjector baseApplicationWithInjector) {
+        return baseApplicationWithInjector;
     }
 
     @Qualifier
