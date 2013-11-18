@@ -20,7 +20,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Module(library = true)
+@Module(library = true, complete = false)
 public class InjectingApplicationModule {
     @Provides
     @Singleton
