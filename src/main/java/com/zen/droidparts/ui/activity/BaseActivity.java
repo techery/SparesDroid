@@ -16,6 +16,7 @@ import dagger.ObjectGraph;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseActivity extends ActionBarActivity implements Injector {
+    public static final String PARAMS = "BaseActivity#PARAMS";
     private ObjectGraph objectGraph;
 
     @Override
