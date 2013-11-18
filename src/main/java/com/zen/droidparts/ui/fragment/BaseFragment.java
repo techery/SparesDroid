@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zen.droidparts.module.Injector;
 import com.zen.droidparts.ui.activity.BaseActivity;
 
 import butterknife.Views;
@@ -66,8 +67,7 @@ public abstract class BaseFragment extends Fragment {
             throw new IllegalArgumentException("BaseFragment have to be attached to instance of BaseActivity");
         }
 
-        BaseActivity baseActivity = (BaseActivity) activity;
-        baseActivity.getBaseApplication().getObjectGraph().inject(this);
+        ((Injector)activity).inject(this);
 
         if (!shouldInheritEventBus()) {
             if (getEventBus() == null) {

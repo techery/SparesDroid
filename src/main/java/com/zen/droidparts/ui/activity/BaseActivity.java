@@ -3,14 +3,31 @@ package com.zen.droidparts.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import com.zen.droidparts.BaseApplication;
+import com.zen.droidparts.module.InjectingActivityModule;
+import com.zen.droidparts.module.Injector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Views;
+import dagger.ObjectGraph;
 import de.greenrobot.event.EventBus;
 
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends ActionBarActivity implements Injector {
+    private ObjectGraph objectGraph;
+
+    @Override
+    public ObjectGraph getObjectGraph() {
+        return objectGraph;
+    }
+
+    @Override
+    public void inject(Object target) {
+        getObjectGraph().inject(target);
+    }
+
     public interface Events {
         class ReloadEvent {
 
@@ -24,9 +41,11 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getApplication() instanceof BaseApplication) {
-            getBaseApplication().getObjectGraph().inject(this);
-        }
+        assert(getApplication() instanceof Injector);
+
+        objectGraph = ((Injector)getApplication()).getObjectGraph().plus(getModules().toArray());
+
+        inject(this);
 
         int contentResourсe = getContentViewResource();
         if (contentResourсe > 0) {
@@ -41,17 +60,25 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getEventBus().registerSticky(this);
+        this.eventBus.registerSticky(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        getEventBus().unregister(this);
+        this.eventBus.unregister(this);
     }
 
-    public BaseApplication getBaseApplication() {
-        return (BaseApplication)getApplication();
+    @Override
+    protected void onDestroy() {
+        this.objectGraph = null;
+        super.onDestroy();
+    }
+
+    protected List<Object> getModules() {
+        List<Object> result = new ArrayList<Object>();
+        result.add(new InjectingActivityModule(this, this));
+        return result;
     }
 
     public void onEvent(Events.ReloadEvent reloadEvent) {
@@ -62,13 +89,5 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected void afterCreateView(Bundle savedInstanceState) {
 
-    }
-
-    public synchronized EventBus getEventBus() {
-        return this.eventBus;
-    }
-
-    public void setEventBus(EventBus eventBus) {
-        this.eventBus = eventBus;
     }
 }
