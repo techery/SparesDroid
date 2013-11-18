@@ -16,6 +16,10 @@ public class BaseRouter {
         startActivityOfClass(activityClass, null, -1);
     }
 
+    protected void startActivityOfClassAndClearTop(Class<? extends BaseActivity> activityClass) {
+        startActivityOfClassWithFlags(activityClass, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+    }
+
     protected void startActivityOfClassWithFlags(Class<? extends BaseActivity> activityClass, int flags) {
         startActivityOfClass(activityClass, null, flags);
     }
