@@ -2,6 +2,8 @@ package com.zen.droidparts.module;
 
 import android.content.Context;
 
+import com.zen.droidparts.module.Specifiers.Application;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -36,7 +38,7 @@ public class InjectingServiceModule {
 
     @Provides
     @Singleton
-    @InjectingApplicationModule.Application
+    @Application
     public Context provideApplicationContext() {
         return this.service.getApplicationContext();
     }

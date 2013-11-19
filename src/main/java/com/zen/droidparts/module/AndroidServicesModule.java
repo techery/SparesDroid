@@ -6,6 +6,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.view.LayoutInflater;
 
+import com.zen.droidparts.module.Specifiers.Application;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -16,25 +18,25 @@ public class AndroidServicesModule {
 
     @Provides
     @Singleton
-    LocationManager provideLocationManager(Context context) {
+    LocationManager provideLocationManager(@Application Context context) {
         return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Provides
     @Singleton
-    LayoutInflater provideLayoutInflater(Context context) {
+    LayoutInflater provideLayoutInflater(@Application Context context) {
         return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Provides
     @Singleton
-    Resources provideResources(Context context) {
+    Resources provideResources(@Application Context context) {
         return context.getResources();
     }
 
     @Provides
     @Singleton
-    ConnectivityManager provideConnectivityManager(Context context) {
+    ConnectivityManager provideConnectivityManager(@Application Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 }

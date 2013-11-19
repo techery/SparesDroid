@@ -3,27 +3,18 @@ package com.zen.droidparts.module;
 import android.content.Context;
 
 import com.zen.droidparts.application.BaseApplicationWithInjector;
+import com.zen.droidparts.module.Specifiers.Application;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 @Module(
         includes = {
-                AndroidServicesModule.class
-
+                AndroidServicesModule.class,
+                EventBusModule.class
         },
         library = true,
         complete = false)
@@ -49,11 +40,5 @@ public class InjectingApplicationModule {
         return baseApplicationWithInjector;
     }
 
-    @Qualifier
-    @Target({FIELD, PARAMETER, METHOD})
-    @Documented
-    @Retention(RUNTIME)
-    public @interface Application {
 
-    }
 }

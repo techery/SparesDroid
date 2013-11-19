@@ -1,10 +1,8 @@
-package com.zen.droidparts.initializer;
+package com.zen.droidparts.analitics.initializers;
 
 import com.testflightapp.lib.TestFlight;
 import com.zen.droidparts.application.AppInitializer;
 import com.zen.droidparts.application.BaseApplicationWithInjector;
-
-import javax.inject.Inject;
 
 import dagger.Lazy;
 
@@ -21,11 +19,9 @@ public class TestFlightInitializer implements AppInitializer {
         }
     }
 
-
     final TestFlightConfig testFlightConfig;
     final Lazy<BaseApplicationWithInjector> app;
 
-    @Inject
     public TestFlightInitializer(TestFlightConfig testFlightConfig, Lazy<BaseApplicationWithInjector> applicationWithInjector) {
         this.testFlightConfig = testFlightConfig;
         this.app = applicationWithInjector;

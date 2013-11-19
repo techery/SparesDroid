@@ -30,7 +30,6 @@ public abstract class BaseApplicationWithInjector extends Application implements
 
     private void runInitializers() {
         for(AppInitializer initializer : appInitializers) {
-            inject(initializer);
             initializer.initialize();
         }
     }
