@@ -1,15 +1,21 @@
-package com.zen.droidparts;
+package com.zen.droidparts.application;
 
 import android.app.Application;
 
 import com.zen.droidparts.module.Injector;
 
 import java.util.List;
+import java.util.Set;
+
+import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 
 public abstract class BaseApplicationWithInjector extends Application implements Injector {
     private ObjectGraph objectGraph;
+
+    @Inject
+    Set<AppInitializer> appInitializers;
 
     @Override
     public void onCreate() {
@@ -18,6 +24,15 @@ public abstract class BaseApplicationWithInjector extends Application implements
         this.objectGraph = ObjectGraph.create(getModules().toArray());
 
         inject(this);
+
+        runInitializers();
+    }
+
+    private void runInitializers() {
+        for(AppInitializer initializer : appInitializers) {
+            inject(initializer);
+            initializer.initialize();
+        }
     }
 
     protected abstract List<Object> getModules();

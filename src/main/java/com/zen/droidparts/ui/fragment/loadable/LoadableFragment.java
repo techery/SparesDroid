@@ -1,10 +1,10 @@
 package com.zen.droidparts.ui.fragment.loadable;
 
 import com.zen.droidparts.loader.ContentLoader;
-import com.zen.droidparts.ui.fragment.BaseFragment;
+import com.zen.droidparts.ui.fragment.InjectingFragment;
 
 
-public abstract class LoadableFragment<T> extends BaseFragment implements ContentLoader.ContentLoadingObserving<T> {
+public abstract class LoadableFragment<T> extends InjectingFragment implements ContentLoader.ContentLoadingObserving<T> {
     private ContentLoader<T> contentLoader;
 
     @Override

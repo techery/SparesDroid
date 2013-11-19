@@ -6,19 +6,8 @@ import com.zen.droidparts.loader.ContentLoaderController;
 import com.zen.droidparts.ui.fragment.loadable.LoadableFragment;
 import com.zen.droidparts.ui.view.cell.BaseCell;
 
-import de.greenrobot.event.EventBus;
-
 public abstract class CollectionFragment<T> extends LoadableFragment<T> {
     protected DataListAdapter<T> dataAdapter;
-
-    @Override
-    public void setEventBus(EventBus eventBus) {
-        super.setEventBus(eventBus);
-
-        if (getDataAdapter() != null) {
-            getDataAdapter().getController().setEventBus(getEventBus());
-        }
-    }
 
     @Override
     public void setContentLoader(ContentLoader<T> contentLoader) {
@@ -47,7 +36,6 @@ public abstract class CollectionFragment<T> extends LoadableFragment<T> {
         this.dataAdapter = dataAdapter;
 
         getDataAdapter().setContentLoader(getContentLoader());
-        getDataAdapter().getController().setEventBus(getEventBus());
         getDataAdapter().getController().setCellBuilder(getCellBuilder());
     }
 

@@ -6,12 +6,12 @@ import android.widget.AdapterView;
 import com.zen.droidparts.adapter.DataListAdapter;
 import com.zen.droidparts.ui.view.cell.BaseCell;
 
-public abstract class BaseListFragment<T, ET, LV> extends CollectionFragment<T> implements AdapterView.OnItemClickListener {
+public abstract class InjectingListFragment<T, ET, LV> extends CollectionFragment<T> implements AdapterView.OnItemClickListener {
     protected LV listView;
     private BaseCell.CellBuilder cellBuilder;
 
     @Override
-    protected void afterCreateView(View rootView) {
+    public void afterCreateView(View rootView) {
         super.afterCreateView(rootView);
 
         setListView(findListView(rootView));

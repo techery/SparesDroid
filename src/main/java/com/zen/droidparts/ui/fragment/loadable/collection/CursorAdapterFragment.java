@@ -4,9 +4,9 @@ import android.database.Cursor;
 
 import com.zen.droidparts.adapter.BaseCursorListAdapter;
 
-public abstract class CursorAdapterFragment<T, LV> extends BaseListFragment<Cursor, T, LV> {
+public abstract class CursorAdapterFragment<T, LV> extends InjectingListFragment<Cursor, T, LV> {
     @Override
-    protected void afterCreateView(android.view.View rootView) {
+    public void afterCreateView(android.view.View rootView) {
         super.afterCreateView(rootView);
         setDataAdapter(new BaseCursorListAdapter(getActivity()));
     }

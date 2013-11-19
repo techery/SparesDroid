@@ -2,7 +2,7 @@ package com.zen.droidparts.module;
 
 import android.content.Context;
 
-import com.zen.droidparts.BaseApplicationWithInjector;
+import com.zen.droidparts.application.BaseApplicationWithInjector;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -20,7 +20,13 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Module(library = true, complete = false)
+@Module(
+        includes = {
+                AndroidServicesModule.class
+
+        },
+        library = true,
+        complete = false)
 public class InjectingApplicationModule {
     @Provides
     @Singleton
