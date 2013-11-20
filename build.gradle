@@ -12,7 +12,7 @@ apply plugin: 'android-library'
 repositories {
     mavenCentral()
     maven {
-        url "http://146.185.181.39:8081/nexus/content/groups/public/"
+        url "http://nexus.techery.io/public/"
     }
 }
 

@@ -2,7 +2,7 @@ package com.techery.spares.module;
 
 import android.content.Context;
 
-import com.techery.spares.module.Specifiers.Activity;
+import com.techery.spares.module.Annotations.Activity;
 import com.techery.spares.ui.activity.BaseActivity;
 
 import javax.inject.Singleton;

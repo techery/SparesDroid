@@ -3,7 +3,7 @@ package com.techery.spares.module;
 import android.content.Context;
 
 import com.techery.spares.application.BaseApplicationWithInjector;
-import com.techery.spares.module.Specifiers.Application;
+import com.techery.spares.module.Annotations.Application;
 
 import javax.inject.Singleton;
 

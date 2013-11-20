@@ -6,7 +6,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.view.LayoutInflater;
 
-import com.techery.spares.module.Specifiers.Application;
+import com.techery.spares.module.Annotations.Application;
 
 import javax.inject.Singleton;
 
