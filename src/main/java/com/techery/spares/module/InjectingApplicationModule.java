@@ -17,11 +17,11 @@ import dagger.Provides;
                 EventBusModule.class
         },
         library = true,
-        complete = false)
+        complete = false
+)
 public class InjectingApplicationModule {
     @Provides
     @Singleton
-    @Application
     Context provideContext(BaseApplicationWithInjector baseApplicationWithInjector) {
         return baseApplicationWithInjector.getApplicationContext();
     }

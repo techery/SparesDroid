@@ -1,6 +1,7 @@
 package com.techery.spares.module;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -18,25 +19,31 @@ public class AndroidServicesModule {
 
     @Provides
     @Singleton
-    LocationManager provideLocationManager(@Application Context context) {
+    LocationManager provideLocationManager(Context context) {
         return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Provides
     @Singleton
-    LayoutInflater provideLayoutInflater(@Application Context context) {
+    LayoutInflater provideLayoutInflater(Context context) {
         return (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Provides
     @Singleton
-    Resources provideResources(@Application Context context) {
+    Resources provideResources(Context context) {
         return context.getResources();
     }
 
     @Provides
     @Singleton
-    ConnectivityManager provideConnectivityManager(@Application Context context) {
+    ConnectivityManager provideConnectivityManager(Context context) {
         return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    PackageManager providePackageManager(Context context) {
+        return context.getPackageManager();
     }
 }

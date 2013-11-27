@@ -38,7 +38,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     @Inject
     @Global
-    EventBus eventBus;
+    protected EventBus eventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

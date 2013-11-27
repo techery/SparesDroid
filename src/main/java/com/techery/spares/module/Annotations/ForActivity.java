@@ -15,5 +15,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD, PARAMETER, METHOD})
 @Documented
 @Retention(RUNTIME)
-public @interface Activity {
+public @interface ForActivity {
 }

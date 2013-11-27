@@ -2,7 +2,7 @@ package com.techery.spares.module;
 
 import android.content.Context;
 
-import com.techery.spares.module.Annotations.Activity;
+import com.techery.spares.module.Annotations.ForActivity;
 import com.techery.spares.ui.activity.BaseActivity;
 
 import javax.inject.Singleton;
@@ -22,21 +22,21 @@ public class InjectingActivityModule {
 
     @Provides
     @Singleton
-    @Activity
+    @ForActivity
     public Context provideActivityContext() {
         return activity;
     }
 
     @Provides
     @Singleton
-    @Activity
+    @ForActivity
     public BaseActivity provideActivity() {
         return activity;
     }
 
     @Provides
     @Singleton
-    @Activity
+    @ForActivity
     public Injector provideActivityInjector() {
         return injector;
     }
