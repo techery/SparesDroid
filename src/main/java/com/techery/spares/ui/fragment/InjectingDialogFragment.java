@@ -31,8 +31,6 @@ public abstract class InjectingDialogFragment extends DialogFragment implements 
 
     }
 
-    public abstract int getFragmentLayoutResource();
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

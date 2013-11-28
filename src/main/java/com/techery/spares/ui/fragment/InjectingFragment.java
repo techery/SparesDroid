@@ -38,8 +38,6 @@ public abstract class InjectingFragment extends Fragment implements Configurable
 
     }
 
-    public abstract int getFragmentLayoutResource();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return FragmentHelper.onCreateView(inflater, container, this);
