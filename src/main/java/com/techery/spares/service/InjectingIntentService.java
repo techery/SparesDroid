@@ -1,6 +1,8 @@
 package com.techery.spares.service;
 
+import android.app.IntentService;
 import android.app.Service;
+import android.content.Intent;
 
 import com.techery.spares.module.Injector;
 
@@ -9,8 +11,12 @@ import java.util.List;
 
 import dagger.ObjectGraph;
 
-public abstract class InjectingService extends Service implements Injector {
+public abstract class InjectingIntentService extends IntentService implements Injector {
     private ObjectGraph objectGraph;
+
+    public InjectingIntentService(String name) {
+        super(name);
+    }
 
     @Override
     public ObjectGraph getObjectGraph() {
