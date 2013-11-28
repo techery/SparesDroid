@@ -3,6 +3,7 @@ package com.techery.spares.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import com.techery.spares.annotations.Layout;
 import com.techery.spares.module.Annotations.Global;
 import com.techery.spares.module.InjectingActivityModule;
 import com.techery.spares.module.Injector;
