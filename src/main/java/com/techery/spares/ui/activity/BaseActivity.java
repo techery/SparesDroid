@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 
 
 import com.techery.spares.annotations.Layout;
-import com.techery.spares.annotations.Menu;
+import com.techery.spares.annotations.MenuResource;
 import com.techery.spares.module.Annotations.Global;
 import com.techery.spares.module.InjectingActivityModule;
 import com.techery.spares.module.Injector;
@@ -93,7 +93,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        Menu menuResource = this.getClass().getAnnotation(Menu.class);
+        MenuResource menuResource = this.getClass().getAnnotation(MenuResource.class);
         if (menuResource != null) {
             getMenuInflater().inflate(menuResource.value(), menu);
             return true;
