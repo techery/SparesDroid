@@ -35,6 +35,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
     }
 
     private void setupObjectGraph() {
+        assert(getApplication() instanceof Injector);
         objectGraph = ((Injector)getApplication()).getObjectGraph().plus(getModules().toArray());
     }
 
@@ -50,22 +51,23 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);        
 
-        assert(getApplication() instanceof Injector);
-
-        setupObjectGraph();
+        setupObjectGraph();        
+        setupLayout();
 
         inject(this);
-
-        int contentResourсe = getContentViewResource();
-        if (contentResourсe > 0) {
-            setContentView(contentResourсe);
-        }
 
         Views.inject(this);
 
         afterCreateView(savedInstanceState);
+    }
+
+    public void setupLayout() {
+        Layout layout = this.getClass().getAnnotation(Layout.class);
+        if (layout != null) {
+            setContentView(layout.value());
+        }
     }
 
     @Override
@@ -95,8 +97,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
     public void onEvent(Events.ReloadEvent reloadEvent) {
 
     }
-
-    protected abstract int getContentViewResource();
 
     protected void afterCreateView(Bundle savedInstanceState) {
 
