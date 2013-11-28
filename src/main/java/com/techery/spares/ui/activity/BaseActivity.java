@@ -22,12 +22,20 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     @Override
     public ObjectGraph getObjectGraph() {
+        if (objectGraph == null) {
+            setupObjectGraph();
+        }
+        
         return objectGraph;
     }
 
     @Override
     public void inject(Object target) {
         getObjectGraph().inject(target);
+    }
+
+    private void setupObjectGraph() {
+        objectGraph = ((Injector)getApplication()).getObjectGraph().plus(getModules().toArray());
     }
 
     public interface Events {
@@ -46,7 +54,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
         assert(getApplication() instanceof Injector);
 
-        objectGraph = ((Injector)getApplication()).getObjectGraph().plus(getModules().toArray());
+        setupObjectGraph();
 
         inject(this);
 
