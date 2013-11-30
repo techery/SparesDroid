@@ -27,7 +27,7 @@ public class BaseRouter {
 
     protected void startActivityOfClass(Class<? extends BaseActivity> activityClass, Bundle params, int flags) {
         Intent intent = new Intent(this.activity, activityClass);
-
+        
         if (params != null) {
             intent.getExtras().putBundle(BaseActivity.PARAMS, params);
         }
