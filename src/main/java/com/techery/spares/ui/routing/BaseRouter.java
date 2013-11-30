@@ -36,6 +36,10 @@ public class BaseRouter {
             intent.setFlags(flags);
         }
 
+        startIntent(intent);
+    }
+
+    protected void startIntent(Intent intent) {
         this.activity.startActivity(intent);
     }
 
