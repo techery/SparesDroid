@@ -1,6 +1,7 @@
 package com.techery.spares.ui.routing;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,5 +53,9 @@ public class BaseRouter {
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    public Context getContext() {
+        return this.activity;
     }
 }
