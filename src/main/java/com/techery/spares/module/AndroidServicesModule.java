@@ -1,10 +1,12 @@
 package com.techery.spares.module;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 
 import com.techery.spares.module.Annotations.Application;
@@ -45,5 +47,11 @@ public class AndroidServicesModule {
     @Singleton
     PackageManager providePackageManager(Context context) {
         return context.getPackageManager();
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences provideSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 }

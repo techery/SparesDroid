@@ -1,6 +1,7 @@
 package com.techery.spares.session;
 
-import com.techery.spares.utils.KeyValueStorage;
+import com.techery.spares.storage.ObjectStorage;
+import com.techery.spares.storage.complex_objects.ComplexStorageBuilder;
 
 import de.greenrobot.event.EventBus;
 
@@ -29,28 +30,26 @@ public class SessionHolder<SESSION_CLASS> {
         }
     }
 
-    private final Class<SESSION_CLASS> typeClass;
-    private final KeyValueStorage storage;
+    private final ObjectStorage<SESSION_CLASS> objectStorage;
     private final EventBus eventBus;
 
-    public SessionHolder(KeyValueStorage storage, Class<SESSION_CLASS> cls, EventBus bus) {
-        this.typeClass = cls;
-        this.storage = storage;
+    public SessionHolder(ComplexStorageBuilder builder, Class<SESSION_CLASS> cls, EventBus bus) {
+        this.objectStorage = builder.build(SESSION_KEY, cls);
         this.eventBus = bus;
     }
 
     public void saveSession(SESSION_CLASS session) {
-        this.storage.putObject(SESSION_KEY, session);
+        this.objectStorage.put(session);
         this.eventBus.post(new Events.SessionCreated<SESSION_CLASS>(session));
     }
 
     public void destroySession() {
-        this.storage.putObject(SESSION_KEY, null);
+        this.objectStorage.put(null);
         this.eventBus.post(new Events.SessionDestroyed());
     }
 
     public SESSION_CLASS getActiveSession() {
-        return this.storage.getObject(SESSION_KEY, this.typeClass);
+        return this.objectStorage.get();
     }
 
     public boolean hasActiveSession() {
