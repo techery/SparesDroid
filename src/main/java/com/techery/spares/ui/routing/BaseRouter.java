@@ -1,6 +1,7 @@
 package com.techery.spares.ui.routing;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,14 @@ public class BaseRouter {
 
     protected void startIntent(Intent intent) {
         this.activity.startActivity(intent);
+    }
+
+    protected void startService(Class<? extends Service> serviceClass) {
+        startServiceIntent(new Intent(this.activity, serviceClass));
+    }
+
+    protected void startServiceIntent(Intent intent) {
+        this.activity.startService(intent);
     }
 
     public class RouteEnd {
