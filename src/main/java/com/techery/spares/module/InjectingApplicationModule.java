@@ -2,6 +2,7 @@ package com.techery.spares.module;
 
 import android.content.Context;
 
+import com.techery.spares.application.AppInitializer;
 import com.techery.spares.application.BaseApplicationWithInjector;
 import com.techery.spares.module.Annotations.Application;
 
@@ -14,7 +15,10 @@ import dagger.Provides;
 @Module(
         includes = {
                 AndroidServicesModule.class,
-                EventBusModule.class
+                EventBusModule.class,
+                AndroidServicesModule.class,
+                ConcurentModule.class,
+                SupportModule.class
         },
         library = true,
         complete = false
@@ -38,5 +42,15 @@ public class InjectingApplicationModule {
     @Application
     Injector provideInjector(BaseApplicationWithInjector baseApplicationWithInjector) {
         return baseApplicationWithInjector;
+    }
+
+    @Provides(type = Provides.Type.SET)
+    AppInitializer provideTest() {
+        return new AppInitializer() {
+            @Override
+            public void initialize() {
+
+            }
+        };
     }
 }

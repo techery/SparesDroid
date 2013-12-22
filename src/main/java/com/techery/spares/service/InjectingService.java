@@ -9,7 +9,6 @@ import java.util.List;
 
 import dagger.ObjectGraph;
 
-
 public abstract class InjectingService extends Service implements Injector {
     private ObjectGraph objectGraph;
 

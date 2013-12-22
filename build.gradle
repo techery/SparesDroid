@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.3'
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 
@@ -13,6 +13,7 @@ repositories {
     mavenCentral()
     maven {
         url "http://nexus.techery.io/public/"
+        url "https://oss.sonatype.org/content/groups/staging"
     }
 }
 
@@ -40,6 +41,5 @@ dependencies {
 
     compile 'com.jakewharton:butterknife:3.0.0'
 
-    compile "com.testflightapp:lib:1.2"
-
+    compile 'uk.co.chrisjenx.calligraphy:calligraphy:0.5.+'
 }

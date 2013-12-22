@@ -9,9 +9,6 @@ import com.techery.spares.adapter.FragmentTabsPagerAdapter;
 
 import java.util.List;
 
-/**
- * Created by zen on 11/5/13.
- */
 public abstract class TabbedActivity extends BaseActivity implements ActionBar.TabListener {
     ViewPager viewPager;
 

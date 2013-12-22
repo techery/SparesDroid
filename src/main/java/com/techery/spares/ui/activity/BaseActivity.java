@@ -1,5 +1,6 @@
 package com.techery.spares.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -18,6 +19,8 @@ import javax.inject.Inject;
 import butterknife.Views;
 import dagger.ObjectGraph;
 import de.greenrobot.event.EventBus;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends ActionBarActivity implements Injector {
     public static final String PARAMS = "BaseActivity#PARAMS";
@@ -54,7 +57,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);
+        CalligraphyConfig.initDefault("");
 
         setupObjectGraph();        
         setupLayout();
@@ -89,6 +93,11 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
     protected void onDestroy() {
         this.objectGraph = null;
         super.onDestroy();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
     }
 
     @Override
