@@ -30,7 +30,7 @@ public class BaseRouter {
         Intent intent = new Intent(this.activity, activityClass);
         
         if (params != null) {
-            intent.getExtras().putBundle(BaseActivity.PARAMS, params);
+            intent.putExtras(params);
         }
 
         if (flags > 0) {
