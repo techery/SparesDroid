@@ -8,25 +8,29 @@ import android.os.Bundle;
 
 import com.techery.spares.ui.activity.BaseActivity;
 
-/**
- * Created by zen on 11/16/13.
- */
+import javax.inject.Inject;
+
 public class BaseRouter {
-    private Activity activity;
+    private final BaseActivity activity;
 
-    protected void startActivityOfClassWithoutParams(Class<? extends BaseActivity> activityClass) {
-        startActivityOfClass(activityClass, null, -1);
+    @Inject
+    public BaseRouter(BaseActivity activity) {
+        this.activity = activity;
     }
 
-    protected void startActivityOfClassAndClearTop(Class<? extends BaseActivity> activityClass) {
-        startActivityOfClassWithFlags(activityClass, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    protected void startActivity(Class<? extends BaseActivity> activityClass) {
+        startActivity(activityClass, null, -1);
     }
 
-    protected void startActivityOfClassWithFlags(Class<? extends BaseActivity> activityClass, int flags) {
-        startActivityOfClass(activityClass, null, flags);
+    protected void startActivityAndClearTop(Class<? extends BaseActivity> activityClass) {
+        startActivity(activityClass, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     }
 
-    protected void startActivityOfClass(Class<? extends BaseActivity> activityClass, Bundle params, int flags) {
+    protected void startActivity(Class<? extends BaseActivity> activityClass, int flags) {
+        startActivity(activityClass, null, flags);
+    }
+
+    protected void startActivity(Class<? extends BaseActivity> activityClass, Bundle params, int flags) {
         Intent intent = new Intent(this.activity, activityClass);
         
         if (params != null) {
@@ -37,10 +41,10 @@ public class BaseRouter {
             intent.setFlags(flags);
         }
 
-        startIntent(intent);
+        startActivityIntent(intent);
     }
 
-    protected void startIntent(Intent intent) {
+    protected void startActivityIntent(Intent intent) {
         this.activity.startActivity(intent);
     }
 
@@ -62,10 +66,6 @@ public class BaseRouter {
 
     protected RouteEnd routeEnd() {
         return routeEnd;
-    }
-
-    public void setActivity(Activity activity) {
-        this.activity = activity;
     }
 
     public Context getContext() {
