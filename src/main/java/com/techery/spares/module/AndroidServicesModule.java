@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 
@@ -53,5 +54,11 @@ public class AndroidServicesModule {
     @Singleton
     SharedPreferences provideSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    }
+
+    @Provides
+    @Singleton
+    WifiManager provideWifiManager(Context context) {
+        return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     }
 }
