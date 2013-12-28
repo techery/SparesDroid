@@ -22,7 +22,7 @@ public abstract class TabbedActivity extends BaseActivity implements ActionBar.T
     protected void setupTabs() {
         final ActionBar actionBar = getSupportActionBar();
 
-        FragmentTabsPagerAdapter sectionsPagerAdapter = new FragmentTabsPagerAdapter(this, getSupportFragmentManager(), buildTabs());
+        FragmentTabsPagerAdapter sectionsPagerAdapter = new FragmentTabsPagerAdapter(getSupportFragmentManager(), buildTabs());
 
         viewPager.setAdapter(sectionsPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -31,6 +31,8 @@ public abstract class TabbedActivity extends BaseActivity implements ActionBar.T
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+
+        viewPager.getAdapter().notifyDataSetChanged();
 
         actionBar.removeAllTabs();
         for (int i = 0; i < sectionsPagerAdapter.getCount(); i++) {
