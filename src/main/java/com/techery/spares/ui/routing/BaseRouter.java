@@ -67,4 +67,9 @@ public class BaseRouter {
         videoClient.setData(uri);
         startActivityIntent(videoClient);
     }
+
+    protected void startNewAndFinishCurrentActivity(Class<? extends BaseActivity> activityClass) {
+        startActivity(activityClass);
+        finish();
+    }
 }
