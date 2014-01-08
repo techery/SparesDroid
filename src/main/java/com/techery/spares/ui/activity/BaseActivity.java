@@ -23,7 +23,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity extends ActionBarActivity implements Injector {
-    public static final String PARAMS = "BaseActivity#PARAMS";
     private ObjectGraph objectGraph;
 
     @Override
@@ -40,9 +39,12 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
         getObjectGraph().inject(target);
     }
 
-    private void setupObjectGraph() {
-        assert(getApplication() instanceof Injector);
-        objectGraph = ((Injector)getApplication()).getObjectGraph().plus(getModules().toArray());
+    protected void setupObjectGraph() {
+        objectGraph = getApplicationInjector().getObjectGraph().plus(getModules().toArray());
+    }
+
+    private Injector getApplicationInjector() {
+        return ((Injector)getApplication());
     }
 
     public interface Events {
@@ -60,11 +62,10 @@ public abstract class BaseActivity extends ActionBarActivity implements Injector
         super.onCreate(savedInstanceState);
         CalligraphyConfig.initDefault("");
 
-        setupObjectGraph();        
-        setupLayout();
-
+        setupObjectGraph();
         inject(this);
 
+        setupLayout();
         Views.inject(this);
 
         afterCreateView(savedInstanceState);
