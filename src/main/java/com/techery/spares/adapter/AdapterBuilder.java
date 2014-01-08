@@ -17,7 +17,7 @@ public class AdapterBuilder {
         this.context = context;
     }
 
-    public <T> BaseArrayAdapter build(List<T> objects, Class<? extends Cell<T>> cellClass) {
+    public <T> BaseArrayAdapter<T> build(List<T> objects, Class<? extends Cell<T>> cellClass) {
         return new BaseArrayAdapter<T>(this.context, injector, objects, cellClass);
     }
 }
