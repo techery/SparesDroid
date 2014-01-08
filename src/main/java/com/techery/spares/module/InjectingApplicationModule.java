@@ -24,6 +24,7 @@ import dagger.Provides;
         complete = false
 )
 public class InjectingApplicationModule {
+
     @Provides
     @Singleton
     Context provideContext(BaseApplicationWithInjector baseApplicationWithInjector) {
@@ -45,7 +46,7 @@ public class InjectingApplicationModule {
     }
 
     @Provides(type = Provides.Type.SET)
-    AppInitializer provideTest() {
+    AppInitializer provideEmptyInitializer() {
         return new AppInitializer() {
             @Override
             public void initialize() {
