@@ -9,8 +9,6 @@ import android.os.Bundle;
 
 import com.techery.spares.ui.activity.BaseActivity;
 
-import javax.inject.Inject;
-
 public class BaseRouter {
     private final Activity activity;
 

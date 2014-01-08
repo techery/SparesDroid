@@ -32,7 +32,6 @@ dependencies {
 
     compile 'com.squareup.dagger:dagger-compiler:1.2.0'
     compile 'com.squareup.dagger:dagger-parent:1.2.0'
-    compile 'com.squareup:tape:1.1.1'
     compile 'de.greenrobot:eventbus:2.0.2'
 
     compile 'com.squareup.picasso:picasso:2.1.1'
