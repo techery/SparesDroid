@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.techery.spares.ui.activity.BaseActivity;
@@ -11,10 +12,9 @@ import com.techery.spares.ui.activity.BaseActivity;
 import javax.inject.Inject;
 
 public class BaseRouter {
-    private final BaseActivity activity;
+    private final Activity activity;
 
-    @Inject
-    public BaseRouter(BaseActivity activity) {
+    public BaseRouter(Activity activity) {
         this.activity = activity;
     }
 
@@ -56,19 +56,17 @@ public class BaseRouter {
         this.activity.startService(intent);
     }
 
-    public class RouteEnd {
-        public void andFinish() {
-            activity.finish();
-        }
-    }
-
-    RouteEnd routeEnd = new RouteEnd();
-
-    protected RouteEnd routeEnd() {
-        return routeEnd;
+    protected void finish() {
+        activity.finish();
     }
 
     public Context getContext() {
         return this.activity;
+    }
+
+    protected void openUri(Uri uri) {
+        Intent videoClient = new Intent(Intent.ACTION_VIEW);
+        videoClient.setData(uri);
+        startActivityIntent(videoClient);
     }
 }
