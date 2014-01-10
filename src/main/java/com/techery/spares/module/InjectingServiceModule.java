@@ -2,7 +2,7 @@ package com.techery.spares.module;
 
 import android.content.Context;
 
-import com.techery.spares.module.Specifiers.Application;
+import com.techery.spares.module.Annotations.Application;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

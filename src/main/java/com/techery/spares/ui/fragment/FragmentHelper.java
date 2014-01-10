@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.techery.spares.annotations.Layout;
 import com.techery.spares.module.Injector;
 
 import butterknife.Views;
@@ -15,7 +16,13 @@ import butterknife.Views;
 public class FragmentHelper {
 
     public static View onCreateView(LayoutInflater inflater, ViewGroup container, ConfigurableFragment configurableFragment) {
-        View rootView = inflater.inflate(configurableFragment.getFragmentLayoutResource(), container, false);
+        Layout layout = configurableFragment.getClass().getAnnotation(Layout.class);
+
+        if (layout == null) {
+            throw new IllegalArgumentException("ConfigurableFragment should have Layout annotation");
+        }
+
+        View rootView = inflater.inflate(layout.value(), container, false);
 
         Views.inject(configurableFragment, rootView);
 

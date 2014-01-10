@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.3'
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 
@@ -11,16 +11,16 @@ apply plugin: 'android-library'
 
 repositories {
     mavenCentral()
-    maven {
-        url "http://146.185.181.39:8081/nexus/content/groups/public/"
-    }
+    maven { url 'http://nexus.techery.io/public/' }
+    maven { url 'https://oss.sonatype.org/content/groups/staging' }
 }
 
 android {
     compileSdkVersion 18
-    buildToolsVersion '18.1.1'
+    buildToolsVersion '19'
+
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 18
     }
 }
@@ -29,14 +29,21 @@ dependencies {
     compile 'com.android.support:appcompat-v7:18.0.0'
     compile 'com.android.support:support-v4:18.0.0'
 
+    compile 'com.squareup.dagger:dagger-compiler:1.2.0'
+    compile 'com.squareup.dagger:dagger-parent:1.2.0'
+    compile 'de.greenrobot:eventbus:2.0.2'
+
     compile 'com.squareup.picasso:picasso:2.1.1'
     compile 'com.squareup.retrofit:retrofit:1.2.2'
     compile 'com.squareup.okhttp:okhttp:1.2.1'
-    compile 'com.squareup.dagger:dagger-compiler:1.1.0'
-    compile 'com.squareup.dagger:dagger-parent:1.1.0'
 
-    compile 'com.jakewharton:butterknife:2.0.1'
-    compile 'de.greenrobot:eventbus:2.0.2'
+    compile 'com.jakewharton:butterknife:3.0.0'
 
-    compile "com.testflightapp:lib:1.2"
+    compile 'uk.co.chrisjenx.calligraphy:calligraphy:0.5.+'
+
+    compile 'org.apache.commons:commons-lang3:3.2'
+
+    compile 'au.com.datasymphony:EasyFlow:1.4'
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.slf4j:slf4j-log4j12:1.7.5'
 }

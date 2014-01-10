@@ -1,56 +1,75 @@
 package com.techery.spares.ui.routing;
 
 import android.app.Activity;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.techery.spares.ui.activity.BaseActivity;
 
-/**
- * Created by zen on 11/16/13.
- */
 public class BaseRouter {
-    private Activity activity;
+    private final Activity activity;
 
-    protected void startActivityOfClassWithoutParams(Class<? extends BaseActivity> activityClass) {
-        startActivityOfClass(activityClass, null, -1);
+    public BaseRouter(Activity activity) {
+        this.activity = activity;
     }
 
-    protected void startActivityOfClassAndClearTop(Class<? extends BaseActivity> activityClass) {
-        startActivityOfClassWithFlags(activityClass, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    protected void startActivity(Class<? extends BaseActivity> activityClass) {
+        startActivity(activityClass, null, -1);
     }
 
-    protected void startActivityOfClassWithFlags(Class<? extends BaseActivity> activityClass, int flags) {
-        startActivityOfClass(activityClass, null, flags);
+    protected void startActivityAndClearTop(Class<? extends BaseActivity> activityClass) {
+        startActivity(activityClass, Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     }
 
-    protected void startActivityOfClass(Class<? extends BaseActivity> activityClass, Bundle params, int flags) {
+    protected void startActivity(Class<? extends BaseActivity> activityClass, int flags) {
+        startActivity(activityClass, null, flags);
+    }
+
+    protected void startActivity(Class<? extends BaseActivity> activityClass, Bundle params, int flags) {
         Intent intent = new Intent(this.activity, activityClass);
-
+        
         if (params != null) {
-            intent.getExtras().putBundle(BaseActivity.PARAMS, params);
+            intent.putExtras(params);
         }
 
         if (flags > 0) {
             intent.setFlags(flags);
         }
 
+        startActivityIntent(intent);
+    }
+
+    protected void startActivityIntent(Intent intent) {
         this.activity.startActivity(intent);
     }
 
-    public class RouteEnd {
-        public void andFinish() {
-            activity.finish();
-        }
+    protected void startService(Class<? extends Service> serviceClass) {
+        startServiceIntent(new Intent(this.activity, serviceClass));
     }
 
-    RouteEnd routeEnd = new RouteEnd();
-
-    protected RouteEnd routeEnd() {
-        return routeEnd;
+    protected void startServiceIntent(Intent intent) {
+        this.activity.startService(intent);
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    protected void finish() {
+        activity.finish();
+    }
+
+    public Context getContext() {
+        return this.activity;
+    }
+
+    protected void openUri(Uri uri) {
+        Intent videoClient = new Intent(Intent.ACTION_VIEW);
+        videoClient.setData(uri);
+        startActivityIntent(videoClient);
+    }
+
+    protected void startNewAndFinishCurrentActivity(Class<? extends BaseActivity> activityClass) {
+        startActivity(activityClass);
+        finish();
     }
 }

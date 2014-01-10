@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.techery.spares.module.Annotations.Global;
 import com.techery.spares.module.Injector;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ public abstract class InjectingFragment extends Fragment implements Configurable
     private ObjectGraph objectGraph;
 
     @Inject
+    @Global
     EventBus eventBus;
 
     public interface Events {
@@ -35,8 +37,6 @@ public abstract class InjectingFragment extends Fragment implements Configurable
     public void afterCreateView(View rootView) {
 
     }
-
-    public abstract int getFragmentLayoutResource();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

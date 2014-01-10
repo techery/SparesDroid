@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.techery.spares.module.Annotations.Global;
+
 import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
 public abstract class InjectingDialogFragment extends DialogFragment implements ConfigurableFragment {
     @Inject
+    @Global
     EventBus eventBus;
 
     public void onEvent(InjectingFragment.Events.ReloadEvent reloadEvent) {
@@ -27,8 +30,6 @@ public abstract class InjectingDialogFragment extends DialogFragment implements 
     public void afterCreateView(View rootView) {
 
     }
-
-    public abstract int getFragmentLayoutResource();
 
     @Override
     public void onAttach(Activity activity) {
