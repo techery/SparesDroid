@@ -6,6 +6,8 @@ import android.content.Context;
 import com.techery.spares.adapter.AdapterBuilder;
 import com.techery.spares.module.Annotations.ForActivity;
 import com.techery.spares.ui.activity.BaseActivity;
+import com.techery.spares.utils.ImageLoader;
+import com.techery.spares.utils.PicassoImageLoader;
 import com.techery.spares.utils.TabsController;
 
 import javax.inject.Singleton;
@@ -47,4 +49,15 @@ public class InjectingActivityModule {
     TabsController provideTabsController(BaseActivity activity) {
         return new TabsController(activity);
     }
+
+    @Provides
+    PicassoImageLoader providePicassoImageLoader(Context context) {
+        return new PicassoImageLoader(context);
+    }
+
+    @Provides
+    ImageLoader provideImageLoader(PicassoImageLoader picassoImageLoader) {
+        return picassoImageLoader;
+    }
+
 }
