@@ -1,16 +1,14 @@
 package com.techery.spares.module;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.techery.spares.adapter.AdapterBuilder;
-import com.techery.spares.module.Annotations.ForActivity;
 import com.techery.spares.ui.activity.BaseActivity;
 import com.techery.spares.utils.ImageLoader;
+import com.techery.spares.utils.params.ParamsBuilderCreator;
+import com.techery.spares.utils.params.ParamsExtractor;
 import com.techery.spares.utils.PicassoImageLoader;
 import com.techery.spares.utils.TabsController;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -60,4 +58,13 @@ public class InjectingActivityModule {
         return picassoImageLoader;
     }
 
+    @Provides
+    ParamsExtractor provideParamsExtractor(BaseActivity activity) {
+        return new ParamsExtractor(activity);
+    }
+
+    @Provides
+    ParamsBuilderCreator provideParamsBuilderCreator() {
+        return new ParamsBuilderCreator();
+    }
 }
