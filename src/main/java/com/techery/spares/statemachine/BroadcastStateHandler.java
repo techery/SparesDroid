@@ -21,4 +21,8 @@ public class BroadcastStateHandler implements StateHandler<StateMachineContext> 
             handler.call(stateEnum, stateMachineContext);
         }
     }
+
+    public void release(StateHandler<StateMachineContext> stateHandler) {
+        handlers.remove(stateHandler);
+    }
 }

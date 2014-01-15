@@ -1,12 +1,11 @@
 package com.techery.spares.session;
 
-import com.techery.spares.storage.ObjectStorage;
-import com.techery.spares.storage.complex_objects.ComplexStorageBuilder;
+import com.techery.spares.storage.complex_objects.ComplexObjectStorage;
+import com.techery.spares.storage.preferences.SimpleKeyValueStorage;
 
 import de.greenrobot.event.EventBus;
 
-public class SessionHolder<SESSION_CLASS> {
-    private static String SESSION_KEY = "SESSION_KEY";
+public class SessionHolder<S> extends ComplexObjectStorage<S> {
 
     public interface Events {
         public class SessionChanged {
@@ -30,29 +29,20 @@ public class SessionHolder<SESSION_CLASS> {
         }
     }
 
-    private final ObjectStorage<SESSION_CLASS> objectStorage;
     private final EventBus eventBus;
 
-    public SessionHolder(ComplexStorageBuilder builder, Class<SESSION_CLASS> cls, EventBus bus) {
-        this.objectStorage = builder.build(SESSION_KEY, cls);
+    public SessionHolder(SimpleKeyValueStorage keyValueStorage, Class<S> cls, EventBus bus) {
+        super(keyValueStorage, "SESSION_KEY", cls);
         this.eventBus = bus;
     }
 
-    public void saveSession(SESSION_CLASS session) {
-        this.objectStorage.put(session);
-        this.eventBus.post(new Events.SessionCreated<SESSION_CLASS>(session));
+    public void put(S session) {
+        super.put(session);
+        this.eventBus.post(new Events.SessionCreated<S>(session));
     }
 
-    public void destroySession() {
-        this.objectStorage.put(null);
+    public void destroy() {
+        super.destroy();
         this.eventBus.post(new Events.SessionDestroyed());
-    }
-
-    public SESSION_CLASS getActiveSession() {
-        return this.objectStorage.get();
-    }
-
-    public boolean hasActiveSession() {
-        return getActiveSession() != null;
     }
 }

@@ -4,10 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import au.com.ds.ef.StateEnum;
-import au.com.ds.ef.StatefulContext;
 import au.com.ds.ef.call.ContextHandler;
 
-public class BroadcastHandlerHolder {
+public class BroadcastHandler {
 
     Map<String, BroadcastContextHandler> handlerMap = new HashMap<String, BroadcastContextHandler>();
 
@@ -22,5 +21,10 @@ public class BroadcastHandlerHolder {
         handler.add(contextHandler);
 
         return handler;
+    }
+
+    public void release(StateEnum state, ContextHandler<StateMachineContext> contextHandler) {
+        BroadcastContextHandler handler = handlerMap.get(state.name());
+        handler.remove(contextHandler);
     }
 }
