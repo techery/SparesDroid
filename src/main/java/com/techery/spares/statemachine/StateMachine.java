@@ -3,11 +3,14 @@ package com.techery.spares.statemachine;
 import au.com.ds.ef.EasyFlow;
 import au.com.ds.ef.EventEnum;
 import au.com.ds.ef.StateEnum;
+import au.com.ds.ef.StatefulContext;
 import au.com.ds.ef.call.ContextHandler;
+import au.com.ds.ef.call.ExecutionErrorHandler;
 import au.com.ds.ef.call.StateHandler;
+import au.com.ds.ef.err.ExecutionError;
 import au.com.ds.ef.err.LogicViolationError;
 
-public abstract class StateMachine {
+public abstract class StateMachine implements StateObserving {
 
     private EasyFlow<StateMachineContext> flow;
     private StateMachineContext context;
@@ -15,6 +18,12 @@ public abstract class StateMachine {
     public StateMachine() {
         this.flow = buildFlow().executor(new MainThreadExecutor());
         this.context = new StateMachineContext();
+        this.flow.whenError(new ExecutionErrorHandler<StatefulContext>() {
+            @Override
+            public void call(ExecutionError error, StatefulContext context) {
+                throw new InvalidTransitionException(error.getLocalizedMessage());
+            }
+        });
     }
 
     public StateEnum getState() {
@@ -35,31 +44,50 @@ public abstract class StateMachine {
         flow.start(true, this.context);
     }
 
-    public void trigger(EventEnum event) {
+    public void start(StateMachineContext context) {
+        this.context = context;
+        start();
+    }
+
+    public void trigger(EventEnum event) throws InvalidTransitionException {
         try {
             getFlow().trigger(event, this.context);
         } catch (LogicViolationError logicViolationError) {
-            logicViolationError.printStackTrace();
+            throw new InvalidTransitionException(logicViolationError.getLocalizedMessage());
         }
     }
 
-    BroadcastHandlerHolder enterHolder = new BroadcastHandlerHolder();
+    BroadcastHandler enterHolder = new BroadcastHandler();
 
-    public StateMachine whenEnter(StateEnum state, ContextHandler<StateMachineContext> contextHandler) {
+    @Override
+    public StateObserving whenEnter(StateEnum state, ContextHandler<StateMachineContext> contextHandler) {
         getFlow().whenEnter(state, enterHolder.resolve(state, contextHandler));
         return this;
     }
 
-    BroadcastHandlerHolder leaveHolder = new BroadcastHandlerHolder();
-    public StateMachine whenLeave(StateEnum state, ContextHandler<StateMachineContext> contextHandler) {
+    BroadcastHandler leaveHolder = new BroadcastHandler();
+
+    @Override
+    public StateObserving whenLeave(StateEnum state, ContextHandler<StateMachineContext> contextHandler) {
         getFlow().whenLeave(state, leaveHolder.resolve(state, contextHandler));
         return this;
     }
 
     BroadcastStateHandler broadcastStateHandler = new BroadcastStateHandler();
-    public StateMachine whenEnter(StateHandler<StateMachineContext> stateHandler) {
+
+    @Override
+    public StateObserving whenEnter(StateHandler<StateMachineContext> stateHandler) {
         broadcastStateHandler.add(stateHandler);
         getFlow().whenEnter(broadcastStateHandler);
         return this;
+    }
+
+    public void releaseContextHandler(StateEnum state, ContextHandler<StateMachineContext> contextHandler) {
+        enterHolder.release(state, contextHandler);
+        leaveHolder.release(state, contextHandler);
+    }
+
+    public void releaseStateHandler(StateHandler<StateMachineContext> stateHandler) {
+        broadcastStateHandler.release(stateHandler);
     }
 }

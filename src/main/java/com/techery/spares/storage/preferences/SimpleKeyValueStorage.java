@@ -2,10 +2,10 @@ package com.techery.spares.storage.preferences;
 
 import android.content.SharedPreferences;
 
-public class PreferenceStorage{
+public class SimpleKeyValueStorage {
     private final SharedPreferences appSharedPrefs;
 
-    public PreferenceStorage(final SharedPreferences preferences) {
+    public SimpleKeyValueStorage(final SharedPreferences preferences) {
         this.appSharedPrefs = preferences;
     }
 
@@ -16,6 +16,12 @@ public class PreferenceStorage{
     public void put(final String key, String value) {
         SharedPreferences.Editor prefsEditor = this.appSharedPrefs.edit();
         prefsEditor.putString(key, value);
+        prefsEditor.commit();
+    }
+
+    public void remove(final String key) {
+        SharedPreferences.Editor prefsEditor = this.appSharedPrefs.edit();
+        prefsEditor.remove(key);
         prefsEditor.commit();
     }
 }

@@ -1,6 +1,9 @@
 package com.techery.spares.storage;
 
+import com.google.common.base.Optional;
+
 public interface ObjectStorage<T> {
-    T get();
+    Optional<T> get();
     void put(T obj);
+    void destroy();
 }

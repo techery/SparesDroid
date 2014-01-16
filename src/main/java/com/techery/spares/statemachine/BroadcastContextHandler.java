@@ -18,4 +18,8 @@ public class BroadcastContextHandler implements ContextHandler<StateMachineConte
             handler.call(stateMachineContext);
         }
     }
+
+    public void remove(ContextHandler<StateMachineContext> contextHandler) {
+        handlers.remove(contextHandler);
+    }
 }
