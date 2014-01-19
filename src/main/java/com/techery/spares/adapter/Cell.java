@@ -6,6 +6,4 @@ public interface Cell<T> {
     public interface OnReadyListener {
         void onViewReady();
     }
-
-
 }

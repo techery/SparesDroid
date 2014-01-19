@@ -37,6 +37,10 @@ public class BaseArrayAdapter<T> extends ArrayAdapter<T> {
 
         injector.inject(cell);
 
+        if (cell instanceof ReusableCell) {
+            ((ReusableCell)cell).prepareForReuse();
+        }
+
         cell.setObject(getItem(position));
 
         return convertView;
