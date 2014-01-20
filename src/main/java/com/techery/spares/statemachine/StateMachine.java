@@ -21,7 +21,7 @@ public abstract class StateMachine {
         this.flow.whenError(new ExecutionErrorHandler<StatefulContext>() {
             @Override
             public void call(ExecutionError error, StatefulContext context) {
-                throw new InvalidTransitionException(error.getLocalizedMessage());
+                throw new InvalidTransitionException(error.getCause().getLocalizedMessage());
             }
         });
     }
