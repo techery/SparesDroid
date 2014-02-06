@@ -53,7 +53,6 @@ public class FragmentTabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        Locale l = Locale.getDefault();
-        return this.tabs.get(position).getTitle().toUpperCase(l);
+        return this.tabs.get(position).getTitle();
     }
 }
